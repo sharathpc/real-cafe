@@ -1,27 +1,22 @@
 {
   "compilerOptions": {
-    "jsx": "react",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "target": "ES2021",
-    "declaration": false,
+    "moduleResolution": "node16",
+    "target": "esnext",
+    "module": "Node16",
+    "declaration": true,
     "removeComments": true,
-    "emitDecoratorMetadata": false,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-  },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "**/src/**/*"
-  ]
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
 }
