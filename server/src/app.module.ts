@@ -6,6 +6,7 @@ import { MongooseSchemasModule } from './mongoose/mongoose.module';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { initializeAdminJs } from './adminjs';
+import { AuthModule } from './auth/auth.module';
 
 import('adminjs').then(({ AdminJS }) => {
   import('@adminjs/mongoose').then((AdminJSMongoose) => {
@@ -21,9 +22,10 @@ import('adminjs').then(({ AdminJS }) => {
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.Database_URL),
+    MongooseModule.forRoot(process.env.DATABASE_URL),
     initializeAdminJs,
     MongooseSchemasModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
