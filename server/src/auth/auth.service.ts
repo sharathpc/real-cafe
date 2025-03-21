@@ -14,7 +14,7 @@ export class AuthService {
     this.PEPPER = process.env.PEPPER;
   }
 
-  async hashPassword(password: string): Promise<string> {
+  private async hashPassword(password: string): Promise<string> {
     try {
       const salt = await bcrypt.genSalt(10); // Generate a unique salt
       const hashedPassword = await bcrypt.hash(password + this.PEPPER, salt);
@@ -26,7 +26,7 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<IVendor> {
     const user = await this.vendorModel.findOne({ username: username }).exec();
-    if (user.email === username) {
+    if (user) {
       const [hashedPassword, salt] = user.password.split(':');
       const hash = await bcrypt.hash(password + this.PEPPER, salt);
       if (hash === hashedPassword) {

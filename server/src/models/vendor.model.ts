@@ -1,6 +1,5 @@
 import { Schema, Document } from 'mongoose';
 import { Entities, Roles } from 'src/enums';
-import { Exclude } from 'class-transformer';
 
 export interface IVendor extends Document {
   name: string;

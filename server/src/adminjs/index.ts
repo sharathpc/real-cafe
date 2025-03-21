@@ -1,5 +1,6 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import argon2 from 'argon2';
 
 import {
   IAdmin,
@@ -42,17 +43,15 @@ const roleOptions = {
 };
 
 const passwordOptions = {
-  isVisible: {
-    edit: true,
-    show: false,
-    list: false,
-    filter: false,
-  },
+  isVisible: false,
 };
 
 export const initializeAdminJs = import('@adminjs/nestjs').then(
-  ({ AdminModule }) =>
-    AdminModule.createAdminAsync({
+  async ({ AdminModule }) => {
+    const passwordsFeature = await import('@adminjs/passwords');
+    const { ComponentLoader } = await import('adminjs');
+    const componentLoader = new ComponentLoader();
+    return AdminModule.createAdminAsync({
       imports: [MongooseSchemasModule],
       inject: [
         getModelToken(Entities.Admin),
@@ -72,16 +71,29 @@ export const initializeAdminJs = import('@adminjs/nestjs').then(
       ) => ({
         adminJsOptions: {
           rootPath: '/admin',
+          componentLoader,
           resources: [
             {
               resource: adminModel,
               options: {
                 properties: {
-                  password: passwordOptions,
+                  password: {
+                    isVisible: false,
+                  },
                   role: roleOptions,
                   ...dateTimeStampsOptions,
                 },
               },
+              features: [
+                passwordsFeature.default({
+                  properties: {
+                    encryptedPassword: 'password',
+                    password: 'newPassword',
+                  },
+                  hash: argon2.hash,
+                  componentLoader,
+                }),
+              ],
             },
             {
               resource: categoryModel,
@@ -126,6 +138,16 @@ export const initializeAdminJs = import('@adminjs/nestjs').then(
                   ...dateTimeStampsOptions,
                 },
               },
+              features: [
+                passwordsFeature.default({
+                  properties: {
+                    encryptedPassword: 'password',
+                    password: 'newPassword',
+                  },
+                  hash: argon2.hash,
+                  componentLoader,
+                }),
+              ],
             },
           ],
         },
@@ -140,5 +162,6 @@ export const initializeAdminJs = import('@adminjs/nestjs').then(
           secret: 'secret',
         },
       }),
-    }),
+    });
+  },
 );
