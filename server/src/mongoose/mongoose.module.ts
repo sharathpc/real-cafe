@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Entities } from 'src/enums';
+
+import { Entities } from '../enums/index.js';
 import {
   AdminSchema,
   CategorySchema,
@@ -8,7 +9,7 @@ import {
   ProductSchema,
   EmployeeSchema,
   OrderSchema,
-} from 'src/models';
+} from '../models/index.js';
 
 @Module({
   imports: [

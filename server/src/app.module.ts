@@ -1,19 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import AdminJS from 'adminjs';
+import { Database, Resource } from '@adminjs/mongoose';
 
-import { MongooseSchemasModule } from './mongoose/mongoose.module';
-import { AppService } from './app.service';
-import { AppController } from './app.controller';
-import { initializeAdminJs } from './adminjs';
+import { MongooseSchemasModule } from './mongoose/mongoose.module.js';
+import { AppService } from './app.service.js';
+import { AppController } from './app.controller.js';
+import { initializeAdminJs } from './adminjs/index.js';
+import { AuthProvider } from './adminjs/authenticate.js';
 
-import('adminjs').then(({ AdminJS }) => {
-  import('@adminjs/mongoose').then((AdminJSMongoose) => {
-    AdminJS.registerAdapter({
-      Resource: AdminJSMongoose.Resource,
-      Database: AdminJSMongoose.Database,
-    });
-  });
+AdminJS.registerAdapter({
+  Resource: Resource,
+  Database: Database,
 });
 
 @Module({
@@ -22,10 +21,10 @@ import('adminjs').then(({ AdminJS }) => {
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.DATABASE_URL),
-    initializeAdminJs,
+    initializeAdminJs(),
     MongooseSchemasModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthProvider],
 })
 export class AppModule {}

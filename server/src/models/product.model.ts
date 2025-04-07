@@ -1,5 +1,6 @@
 import { Schema, Document } from 'mongoose';
-import { Entities } from 'src/enums';
+
+import { Entities } from '../enums/index.js';
 
 export interface IProduct extends Document {
   name: string;

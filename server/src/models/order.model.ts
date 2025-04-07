@@ -1,5 +1,6 @@
 import { Schema, Document } from 'mongoose';
-import { Entities, Statuses } from 'src/enums';
+
+import { Entities, Statuses } from '../enums/index.js';
 
 export interface IOrder extends Document {
   status: string;

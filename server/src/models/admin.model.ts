@@ -1,5 +1,6 @@
 import { Schema, Document } from 'mongoose';
-import { Roles } from 'src/enums';
+
+import { Roles } from '../enums/roles.js';
 
 export interface IAdmin extends Document {
   name: string;

@@ -1,8 +1,9 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IAdmin } from 'src/models';
 import argon2 from 'argon2';
-const adminJs = import('adminjs');
+import { BaseAuthProvider } from 'adminjs';
+
+import { IAdmin } from '../models/index.js';
 
 interface LoginHandlerOptions {
   data: Record<string, any>;
@@ -11,28 +12,38 @@ interface LoginHandlerOptions {
   headers: Record<string, any>;
 }
 
-export class AuthProvider extends (await adminJs).BaseAuthProvider {
+export class AuthProvider extends BaseAuthProvider {
   constructor(
     @InjectModel('Admin') private readonly adminModel: Model<IAdmin>,
   ) {
     super();
   }
 
-  public override async handleLogin(opts: LoginHandlerOptions, context) {
-    const { data = {} } = opts;
-    const { email, password } = data;
-
-    return this.authenticate(email, password, context);
+  public getUiProps(): Record<string, any> {
+    return {};
   }
 
-  authenticate = async (email: string, password: string, ctx: any) => {
+  public async handleLogin(opts: LoginHandlerOptions) {
+    const { email, password } = opts.data;
     const admin = await this.adminModel.findOne({ email: email }).exec();
     if (admin) {
-      const [hashedPassword, salt] = admin.password.split(':');
-      if (await argon2.verify(hashedPassword, password)) {
+      if (await argon2.verify(admin.password, password)) {
         return admin;
       }
     }
     return null;
-  };
+  }
+
+  public async handleLogout(context?: any): Promise<any> {
+    console.log(context);
+    return Promise.resolve();
+  }
+
+  public async handleRefreshToken(
+    opts: LoginHandlerOptions,
+    context?: any,
+  ): Promise<any> {
+    console.log(opts, context);
+    return Promise.resolve({});
+  }
 }

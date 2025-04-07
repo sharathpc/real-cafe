@@ -1,5 +1,6 @@
 import { Schema, Document } from 'mongoose';
-import { Entities, Roles } from 'src/enums';
+
+import { Entities, Roles } from '../enums/index.js';
 
 export interface IVendor extends Document {
   name: string;

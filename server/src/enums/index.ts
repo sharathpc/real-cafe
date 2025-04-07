@@ -1,3 +1,3 @@
-export * from './entities';
-export * from './roles';
-export * from './statuses';
+export * from './entities.js';
+export * from './roles.js';
+export * from './statuses.js';

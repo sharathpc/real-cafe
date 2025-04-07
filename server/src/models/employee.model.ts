@@ -1,5 +1,6 @@
 import { Schema, Document } from 'mongoose';
-import { Roles } from 'src/enums';
+
+import { Roles } from '../enums/index.js';
 
 export interface IEmployee extends Document {
   name: string;

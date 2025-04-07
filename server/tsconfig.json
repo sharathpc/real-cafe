@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node16",
+    "module": "ESNext",
     "target": "ESNext",
-    "module": "Node16",
+    "moduleResolution": "Node",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -17,6 +17,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
   }
 }
