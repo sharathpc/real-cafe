@@ -1,6 +1,7 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import argon2 from 'argon2';
+import { AuthProvider } from './authenticate';
 
 import {
   IAdmin,
@@ -11,7 +12,6 @@ import {
   IVendor,
 } from 'src/models';
 import { MongooseSchemasModule } from 'src/mongoose/mongoose.module';
-import { authenticate } from './authenticate';
 import { Entities } from 'src/enums';
 
 const dateTimeStampsOptions = {
@@ -152,9 +152,9 @@ export const initializeAdminJs = import('@adminjs/nestjs').then(
           ],
         },
         auth: {
-          authenticate,
           cookieName: 'adminjs',
           cookiePassword: 'secret',
+          provider:
         },
         sessionOptions: {
           resave: true,
