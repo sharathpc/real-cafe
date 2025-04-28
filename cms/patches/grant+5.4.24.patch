@@ -1,0 +1,29 @@
+diff --git a/node_modules/grant/config/oauth.json b/node_modules/grant/config/oauth.json
+index da98230..37b43d7 100644
+--- a/node_modules/grant/config/oauth.json
++++ b/node_modules/grant/config/oauth.json
+@@ -1191,5 +1191,11 @@
+     "access_url": "https://zoom.us/oauth/token",
+     "oauth": 2,
+     "scope_delimiter": " "
++  },
++  "unified": {
++    "authorize_url": "https://www-dev.realpage.com/login/identity/connect/authorize",
++    "access_url": "https://www-dev.realpage.com/login/identity/connect/token",
++    "oauth": 2,
++    "scope_delimiter": " "
+   }
+ }
+diff --git a/node_modules/grant/config/profile.json b/node_modules/grant/config/profile.json
+index 171284c..c2636d5 100644
+--- a/node_modules/grant/config/profile.json
++++ b/node_modules/grant/config/profile.json
+@@ -640,5 +640,8 @@
+   },
+   "zoom": {
+     "profile_url": "https://api.zoom.us/v2/users/me"
++  },
++  "unified": {
++    "profile_url": "https://www-dev.realpage.com/login/identity/connect/userinfo"
+   }
+ }

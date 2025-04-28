@@ -1,0 +1,19 @@
+diff --git a/node_modules/purest/config/providers.json b/node_modules/purest/config/providers.json
+index 8dd1dae..50f6c0e 100644
+--- a/node_modules/purest/config/providers.json
++++ b/node_modules/purest/config/providers.json
+@@ -2784,5 +2784,14 @@
+         "authorization": "Bearer {auth}"
+       }
+     }
++  },
++  "unified": {
++    "default": {
++      "origin": "https://www-dev.realpage.com",
++      "path": "login/identity/connect/{path}",
++      "headers": {
++        "authorization": "Bearer {auth}"
++      }
++    }
+   }
+ }
