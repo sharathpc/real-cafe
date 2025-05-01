@@ -373,7 +373,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
     description: '';
-    displayName: 'category';
+    displayName: 'Category';
     pluralName: 'categories';
     singularName: 'category';
   };
@@ -409,7 +409,8 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
 export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
   collectionName: 'orders';
   info: {
-    displayName: 'order';
+    description: '';
+    displayName: 'Order';
     pluralName: 'orders';
     singularName: 'order';
   };
@@ -450,7 +451,8 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
-    displayName: 'product';
+    description: '';
+    displayName: 'Product';
     pluralName: 'products';
     singularName: 'product';
   };
@@ -494,7 +496,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
 export interface ApiVendorVendor extends Struct.CollectionTypeSchema {
   collectionName: 'vendors';
   info: {
-    displayName: 'vendor';
+    description: '';
+    displayName: 'Vendor';
     pluralName: 'vendors';
     singularName: 'vendor';
   };

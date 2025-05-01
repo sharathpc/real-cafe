@@ -4,7 +4,8 @@
   "info": {
     "singularName": "vendor",
     "pluralName": "vendors",
-    "displayName": "vendor"
+    "displayName": "Vendor",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
