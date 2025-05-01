@@ -7,9 +7,10 @@ import { ExternalLink } from "@/components/ExternalLink";
 import { STRAPI_URL } from "@/constants/Variables";
 
 export default function LoginScreen() {
+  const CALLBACK_URL = 'projectc://vendor';
   return (
     <ThemedView style={styles.container}>
-      <ExternalLink href={`${STRAPI_URL}/api/connect/unified`}>
+      <ExternalLink href={`${STRAPI_URL}/api/connect/unified?callback=${CALLBACK_URL}`}>
         <ThemedText type="link">Login</ThemedText>
       </ExternalLink>
       <Link href="/vendor">Vendor</Link>
