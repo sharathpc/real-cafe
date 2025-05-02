@@ -11,6 +11,7 @@
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "copytypes": "node copyTypes.js",
     "postinstall": "patch-package"
   },
   "dependencies": {

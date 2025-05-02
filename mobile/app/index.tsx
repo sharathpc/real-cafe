@@ -1,41 +1,53 @@
-import { useEffect } from "react";
-import { Platform, StyleSheet } from "react-native";
-import * as WebBrowser from 'expo-web-browser';
-import { useGlobalSearchParams } from 'expo-router';
-import axios from 'axios';
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
 
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { ExternalLink } from "@/components/ExternalLink";
-import { STRAPI_URL } from "@/constants/Variables";
+import { useAuthStore } from "@/state/authStore";
+import { tokenStorage } from "@/state/storage";
 
-export default function LoginScreen() {
-  const CALLBACK_URL = Platform.OS === 'ios' ? 'projectc://' : 'com.anonymous.projectc://';
+export default function Index() {
+  const { setUser } = useAuthStore();
 
-  const globSearchParams: any = useGlobalSearchParams();
+  const tokenCheck = () => {
+    try {
+      console.log("IN token check");
+      const accessToken = tokenStorage.getString("accessToken") as string;
+      const refreshToken = tokenStorage.getString("refreshToken") as string;
+
+      console.log("Access token:", accessToken);
+
+      if (accessToken) {
+        const decodedAccessToken = jwtDecode<DecodedToken>(accessToken);
+        const decodedRefreshToken = jwtDecode<DecodedToken>(refreshToken);
+
+        const currentTime = Date.now() / 1000;
+        if (decodedRefreshToken?.exp < currentTime) {
+          router.push("/employeelogin");
+          return false;
+        }
+
+        if (decodedAccessToken?.exp < currentTime) {
+          try {
+            refreshTokens();
+            refetchUser(setUser);
+          } catch (error) {
+            console.log("error", error);
+            return false;
+          }
+        }
+        router.push("/employeelogin");
+
+        //TODO if user is emplyee redirect them to home else to vendor home
+      } else {
+        router.push("/home");
+      }
+    } catch (error) {
+      console.error("Error checking tokens:", error);
+    }
+  };
 
   useEffect(() => {
-    if(globSearchParams){
-      axios(`${STRAPI_URL}/api/auth/unified/callback`, {
-        params: globSearchParams,
-      }).then(response => console.log(response.data))
-      WebBrowser.dismissBrowser();
-    }
-  }, [globSearchParams])
+    tokenCheck();
+  }, []);
 
-  return (
-    <ThemedView style={styles.container}>
-      <ExternalLink href={`${STRAPI_URL}/api/connect/unified?callback=${CALLBACK_URL}`}>
-        <ThemedText type="link">Login</ThemedText>
-      </ExternalLink>
-    </ThemedView>
-  );
+  return null;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
