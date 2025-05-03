@@ -8,6 +8,4 @@ const getStrapiToken = (params: any): Promise<any> => {
   }).then((response) => response.data);
 };
 
-export {
-    getStrapiToken
-}
+export { getStrapiToken };

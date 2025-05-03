@@ -1,4 +1,4 @@
-import { ScaleContextProvider, useScaleContext } from "@/context/scaleContext";
+import { ScaleContextProvider, useScaleContext } from "@/context/ScaleContext";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { View, Text } from "react-native";
 import Animated from "react-native-reanimated";

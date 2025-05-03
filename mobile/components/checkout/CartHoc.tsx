@@ -4,7 +4,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import { useCartStore } from "@/state/cartStore";
+import { useCartStore } from "@/store/cartStore";
 import { useScaleContext } from "@/context/ScaleContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LinearGradient from "react-native-linear-gradient";

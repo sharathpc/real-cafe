@@ -4,11 +4,11 @@ export default function AuthLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="employeelogin"
+        name="employeeLogin"
         options={{ headerShown: false, animation: "fade" }}
       />
       <Stack.Screen
-        name="vendorlogin"
+        name="vendorLogin"
         options={{ headerShown: false, animation: "fade" }}
       />
     </Stack>

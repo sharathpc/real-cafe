@@ -2,7 +2,7 @@ import { ActivityIndicator, FlatList, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Product } from "@/models";
 import { ProductItem } from "./ProductItem";
-import { getAllCategoriesById } from "@/services";
+//import { getAllCategoriesById } from "@/services";
 
 interface Props {
   productId: string;
@@ -18,7 +18,7 @@ export const ProductList = ({ productId }: Props) => {
 
   useEffect(() => {
     setLoading(true);
-    getAllCategoriesById(productId)
+    /* getAllCategoriesById(productId)
       .then((data) => {
         console.log(
           "products based on categoryId---------------------------------------------------------",
@@ -29,7 +29,7 @@ export const ProductList = ({ productId }: Props) => {
       })
       .finally(() => {
         setLoading(false);
-      });
+      }); */
   }, [productId]);
 
   return (

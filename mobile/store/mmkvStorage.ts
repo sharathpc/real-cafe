@@ -1,17 +1,13 @@
 import { MMKV } from "react-native-mmkv";
+import { StateStorage } from "zustand/middleware";
 
-export const tokenStorage = new MMKV({
-  id: "token-storage",
-  encryptionKey: "secret-key-projectc",
-});
-
-export const storage = new MMKV({
+const storage = new MMKV({
   id: "projectc-storage",
   encryptionKey: "secret-key-projectc",
 });
 
-export const mmkvStorage = {
-  setItem: (key: string, value: string) => {
+export const MmkvStorage: StateStorage = {
+  setItem: (key: string, value: any) => {
     storage.set(key, value);
   },
   getItem: (key: string) => {

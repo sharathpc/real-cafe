@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { Product } from "@/models";
-import { useCartStore } from "@/state/cartStore";
+import { useCartStore } from "@/store/cartStore";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { RFValue } from "react-native-responsive-fontsize";
 

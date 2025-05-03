@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import React from "react";
-import { useCartStore } from "@/state/cartStore";
+import { useCartStore } from "@/store/cartStore";
 import { OrderItem } from "./OrderItem";
 
 export const OrderList = () => {

@@ -1,7 +1,7 @@
 import { View, FlatList, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Category } from "@/models";
-import { getAllCategories } from "@/services";
+//import { getAllCategories } from "@/services";
 import { Tab } from "./Tab";
 import { ProductList } from "../ProductList";
 
@@ -20,7 +20,7 @@ export const CategoryTabs = () => {
   };
   useEffect(() => {
     setLoading(true);
-    getAllCategories()
+    /* getAllCategories()
       .then((data) => {
         setCategories(data);
         if (data.length > 0) {
@@ -30,7 +30,7 @@ export const CategoryTabs = () => {
       })
       .finally(() => {
         setLoading(false);
-      });
+      }); */
   }, []);
   return (
     <View className="flex-1 items-center">

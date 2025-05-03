@@ -14,7 +14,7 @@ export const ProductSlider = () => {
   }, []);
 
   return (
-    <View pointerEvents="none">
+    <View className="h-80" pointerEvents="none">
       <AutoScroll
         endPaddingWidth={0}
         duration={10000}
@@ -37,7 +37,7 @@ interface RowProps {
 
 const Row = ({ row, rowIndex }: RowProps) => {
   return (
-    <View key={Math.random()} className="flex-row mb-3">
+    <View key={rowIndex} className="flex-row mb-3">
       {row?.map((image: any, imageIndex: number) => {
         const horizontalShift = rowIndex % 2 === 0 ? -18 : 18;
         return (

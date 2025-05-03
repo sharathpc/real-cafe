@@ -4,7 +4,7 @@ import { cartItem, Product } from "@/models";
 import { router } from "expo-router";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { RFValue } from "react-native-responsive-fontsize";
-import { useCartStore } from "@/state/cartStore";
+import { useCartStore } from "@/store/cartStore";
 
 interface Props {
   cartItem: cartItem;
