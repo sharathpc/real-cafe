@@ -32,7 +32,6 @@ const EmployeeLogin = () => {
         const parsedUrl = new URL(unifedInfo.url);
         getStrapiToken(parsedUrl.search)
           .then((data) => {
-            console.log(data);
             setAuthInfo(data.jwt, data.user);
             router.replace("/(auth)/vendorLogin");
           })
@@ -44,7 +43,7 @@ const EmployeeLogin = () => {
   };
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1">
       <CustomSafeAreaView>
         {/* <ProductSlider /> */}
         {/* <Animated.ScrollView
@@ -77,12 +76,3 @@ const EmployeeLogin = () => {
   );
 };
 export default EmployeeLogin;
-
-const styles = StyleSheet.create({
-  subContent: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-});
