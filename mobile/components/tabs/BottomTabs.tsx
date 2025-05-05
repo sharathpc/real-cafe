@@ -7,9 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScalePress } from "../global/ScalePress";
 import { HomeTabIcon, OrderTabIcon, ProfileTabIcon } from "./TabIcons";
 import { screenWidth } from "@/utilis";
-import { CartHoc } from "../checkout/CartHoc";
-import { CustomInput } from "../ui/CustomInput";
-import { CustomText } from "../ui/CustomText";
+/* import { CartHoc } from "../checkout/CartHoc"; */
 
 export const BottomTabs = (props: BottomTabBarProps) => {
   const { scrollY } = useScaleContext();
@@ -40,7 +38,7 @@ export const BottomTabs = (props: BottomTabBarProps) => {
 
   return (
     <>
-      <CartHoc />
+      {/* <CartHoc /> */}
       <Animated.View
         style={[animatedStyle]}
         className={`pb-[${bottom.bottom}] w-full absolute

@@ -7,16 +7,23 @@ import { MmkvStorage } from "./mmkvStorage";
 interface AuthStore {
   token: string | null;
   user: PluginUsersPermissionsUser | null;
-  setAuthInfo: (token: string, user: PluginUsersPermissionsUser) => void;
+  vendorApiToken: string | null;
+  setAuthInfo: (
+    token: string,
+    user: PluginUsersPermissionsUser,
+    vendorApiToken?: string
+  ) => void;
   logout: () => void;
 }
 
 export const useAuthStore = create<AuthStore>()(
   persist(
-    (set, get) => ({
+    (set, _) => ({
       token: null,
       user: null,
-      setAuthInfo: (token, user) => set({ token, user }),
+      vendorApiToken: null,
+      setAuthInfo: (token, user, vendorApiToken) =>
+        set({ token, user, vendorApiToken }),
       logout: () => set({ token: null, user: null }),
     }),
     {

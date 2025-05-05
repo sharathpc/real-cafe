@@ -1,4 +1,4 @@
-import { View, Text, Animated, TouchableOpacity } from "react-native";
+import { Animated, TouchableOpacity } from "react-native";
 import React, { ReactNode } from "react";
 
 interface Props {

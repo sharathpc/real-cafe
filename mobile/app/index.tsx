@@ -3,22 +3,32 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import { useAuthStore } from "@/store/authStore";
+import { axiosInstance } from "@/services/Interceptors";
 
 export default function Index() {
-  const { token } = useAuthStore();
+  const { token, vendorApiToken, logout } = useAuthStore();
   const [isMounted, setIsMounted] = useState(false);
 
   const tokenCheck = () => {
     try {
-      if (!token) {
-        router.replace("/(auth)/employeeLogin");
-      } else {
+      if (token) {
         const decodedJwt: { exp: number } = jwtDecode(token);
         if (decodedJwt.exp * 1000 > Date.now()) {
-          router.replace("/(auth)/vendorLogin");
+          axiosInstance.interceptors.request.use((config) => {
+            config.headers.Authorization = `Bearer ${vendorApiToken ? vendorApiToken : token}`;
+            return config;
+          });
+          router.replace(
+            vendorApiToken ? "/(vendor)/home" : "/(employee)/home"
+          );
         } else {
-          router.replace("/(auth)/employeeLogin");
+          logout();
+          router.replace(
+            vendorApiToken ? "/(auth)/vendorLogin" : "/(auth)/employeeLogin"
+          );
         }
+      } else {
+        router.replace("/(auth)/employeeLogin");
       }
     } catch (error) {
       console.error("Error checking tokens:", error);

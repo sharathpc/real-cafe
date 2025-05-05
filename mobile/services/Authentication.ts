@@ -14,4 +14,19 @@ const getStrapiToken = (
   );
 };
 
-export { getStrapiToken };
+const getStrapiAdminToken = (
+  email: string,
+  password: string
+): Promise<{
+  token: string;
+  user: PluginUsersPermissionsUser;
+}> => {
+  return axios
+    .post(`${STRAPI_URL}/admin/login`, {
+      email,
+      password,
+    })
+    .then((response) => response.data.data);
+};
+
+export { getStrapiToken, getStrapiAdminToken };

@@ -1,32 +1,15 @@
-import { CustomText } from "@/components/ui/CustomText";
-import { Link, Stack } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { Stack } from "expo-router";
+import { View, Text } from "react-native";
 
 export default function NotFoundScreen() {
   return (
     <>
       <Stack.Screen options={{ title: "Oops!" }} />
-      <View style={styles.container}>
-        <CustomText customStyle="text-2xl font-bold text-gray-80">
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-2xl font-bold text-gray-80">
           This screen doesn't exist.
-        </CustomText>
-        {/* <Link href="/" style={styles.link}>
-          <Text>Go to home screen!</Text>
-        </Link> */}
+        </Text>
       </View>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-});

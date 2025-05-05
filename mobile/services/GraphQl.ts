@@ -1,11 +1,20 @@
-import axios from "axios";
+import { axiosInstance } from "./Interceptors";
 
-import { STRAPI_URL } from "@/constants/Variables";
-
-const getStrapiToken = (params: any): Promise<any> => {
-  return axios(`${STRAPI_URL}/api/auth/unified/callback`, {
-    params,
-  }).then((response) => response.data);
+const callStrapiGraphQl = (query: string): Promise<any> => {
+  return axiosInstance
+    .post(`/graphql`, { query })
+    .then((response) => response.data);
 };
 
-export { getStrapiToken };
+const getCategories = (): Promise<any> => {
+  return callStrapiGraphQl(`
+    query InitialData {
+        categories {
+            documentId
+            name
+        }
+    }
+  `);
+};
+
+export { getCategories };

@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { router } from "expo-router";
-import { View, Image, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  Alert,
+  SafeAreaView,
+  Animated,
+  Button,
+} from "react-native";
 import { LinearGradient } from "react-native-linear-gradient";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
 
 import { imageData, lightColors } from "@/utilis";
-import { CustomText } from "@/components/ui/CustomText";
-import { CustomButton } from "@/components/ui/CustomButton";
-import { CustomSafeAreaView, ProductSlider } from "@/components";
+import { ProductSlider } from "@/components";
 import { STRAPI_URL } from "@/constants/Variables";
 import { getStrapiToken } from "@/services/Authentication";
 import { useAuthStore } from "@/store/authStore";
@@ -16,7 +22,7 @@ import { useAuthStore } from "@/store/authStore";
 const gradientColors = [...lightColors].reverse();
 
 const EmployeeLogin = () => {
-  const { setAuthInfo } = useAuthStore();
+  const { token, setAuthInfo } = useAuthStore();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleAuth = async () => {
@@ -33,7 +39,6 @@ const EmployeeLogin = () => {
         getStrapiToken(parsedUrl.search)
           .then((data) => {
             setAuthInfo(data.jwt, data.user);
-            router.replace("/(auth)/vendorLogin");
           })
           .finally(() => setLoading(false));
       }
@@ -42,37 +47,32 @@ const EmployeeLogin = () => {
     }
   };
 
+  useEffect(() => {
+    if (token) {
+      router.replace("/");
+    }
+  }, [token]);
+
   return (
-    <View className="flex-1">
-      <CustomSafeAreaView>
-        {/* <ProductSlider /> */}
-        {/* <Animated.ScrollView
-          bounces={false}
-          keyboardDismissMode="on-drag"
-          keyboardShouldPersistTaps="handled"
-          contentContainerStyle={styles.subContent}
-        > */}
-        <LinearGradient colors={gradientColors} className="pt-14 w-full" />
-        <View className="justify-center items-center w-full bg-white px-2.5 pb-2.5">
-          <Image
-            source={imageData[7]}
-            className="h-12 w-12 rounded-2xl my-2.5"
-          />
-          <CustomText customStyle="text-2xl font-bold text-gray-80">
-            Order online,collect seamlessly
-          </CustomText>
-          <CustomText customStyle="text-2xl font-semibold mt-0.5 mb-7 opacity-80 text-gray-900">
-            Log in or sign up
-          </CustomText>
-          <CustomButton
-            title="Unified Login"
-            onPress={() => handleAuth()}
-            loading={loading}
-          ></CustomButton>
-        </View>
-        {/* </Animated.ScrollView> */}
-      </CustomSafeAreaView>
-    </View>
+    <SafeAreaView className="flex-1">
+      {/* <ProductSlider /> */}
+      <LinearGradient colors={gradientColors} className="pt-14 w-full" />
+      <View className="justify-center items-center w-full px-2.5 pb-2.5">
+        <Image source={imageData[7]} className="h-12 w-12 rounded-2xl my-2.5" />
+        <Text className="text-2xl font-bold text-gray-80">
+          Order online,collect seamlessly
+        </Text>
+        <Text className="text-2xl font-semibold mt-0.5 mb-7 opacity-80 text-gray-900">
+          Log in with Unified
+        </Text>
+        <Button title="Unified Login" onPress={() => handleAuth()}></Button>
+
+        <Button
+          title="Vendor Login"
+          onPress={() => router.push("/(auth)/vendorLogin")}
+        ></Button>
+      </View>
+    </SafeAreaView>
   );
 };
 export default EmployeeLogin;
