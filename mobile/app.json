@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Project C",
+    "name": "Real Cafe",
     "slug": "projectc",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,12 +10,16 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.projectc"
+      "bundleIdentifier": "com.anonymous.projectc",
+      "icon": {
+        "dark": "./assets/images/ios-dark.png",
+        "light": "./assets/images/ios-light.png",
+        "tinted": "./assets/images/ios-tinted.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/adaptive-icon.png"
       },
       "package": "com.anonymous.projectc"
     },
@@ -29,10 +33,13 @@
       [
         "expo-splash-screen",
         {
+          "backgroundColor": "#232323",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "dark": {
+            "image": "./assets/images/splash-icon-dark.png",
+            "backgroundColor": "#000000"
+          },
+          "imageWidth": 200
         }
       ]
     ],

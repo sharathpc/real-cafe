@@ -1,5 +1,3 @@
-import { Platform } from "react-native";
-
 /**
  * Below are the variables that are used in the app.
  */
