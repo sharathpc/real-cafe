@@ -6,7 +6,7 @@ import { useAnimatedStyle, withTiming } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScalePress } from "../global/ScalePress";
 import { HomeTabIcon, OrderTabIcon, ProfileTabIcon } from "./TabIcons";
-import { screenWidth } from "@/utilis";
+import { screenWidth } from "@/utils";
 /* import { CartHoc } from "../checkout/CartHoc"; */
 
 export const BottomTabs = (props: BottomTabBarProps) => {

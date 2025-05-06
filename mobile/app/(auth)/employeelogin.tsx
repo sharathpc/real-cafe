@@ -13,7 +13,7 @@ import { LinearGradient } from "react-native-linear-gradient";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
 
-import { imageData, lightColors } from "@/utilis";
+import { imageData, lightColors } from "@/utils";
 import { ProductSlider } from "@/components";
 import { STRAPI_URL } from "@/constants/Variables";
 import { getStrapiToken } from "@/services/Authentication";

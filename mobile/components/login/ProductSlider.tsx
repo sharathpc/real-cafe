@@ -1,6 +1,6 @@
 import { View, Image, StyleSheet } from "react-native";
 import { memo, useMemo } from "react";
-import { imageData } from "@/utilis";
+import { imageData } from "@/utils";
 import AutoScroll from "@homielab/react-native-auto-scroll";
 
 export const ProductSlider = () => {
