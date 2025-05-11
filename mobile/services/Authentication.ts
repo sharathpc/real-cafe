@@ -1,13 +1,13 @@
 import axios from "axios";
 
 import { STRAPI_URL } from "@/constants/Variables";
-import { PluginUsersPermissionsUser } from "@/types/contentTypes";
+import { UserModel } from "@/models";
 
 const getStrapiToken = (
   searchParams: any
 ): Promise<{
   jwt: string;
-  user: PluginUsersPermissionsUser;
+  user: UserModel;
 }> => {
   return axios(`${STRAPI_URL}/api/auth/unified/callback${searchParams}`).then(
     (response) => response.data
@@ -19,7 +19,7 @@ const getStrapiAdminToken = (
   password: string
 ): Promise<{
   token: string;
-  user: PluginUsersPermissionsUser;
+  user: UserModel;
 }> => {
   return axios
     .post(`${STRAPI_URL}/admin/login`, {

@@ -1,16 +1,16 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-import { PluginUsersPermissionsUser } from "@/types/contentTypes";
+import { UserModel } from "@/models";
 import { MmkvStorage } from "./mmkvStorage";
 
 interface AuthStore {
   token: string | null;
-  user: PluginUsersPermissionsUser | null;
+  user: UserModel | null;
   vendorApiToken: string | null;
   setAuthInfo: (
     token: string,
-    user: PluginUsersPermissionsUser,
+    user: UserModel,
     vendorApiToken?: string
   ) => void;
   logout: () => void;
