@@ -7,7 +7,7 @@ const getVendorProducts = (vendorId: string): Promise<any> => {
       fields: ["name", "price", "available"],
       populate: {
         image: {
-          fields: [],
+          fields: ["name", "url"],
         },
         category: {
           fields: ["name"],
