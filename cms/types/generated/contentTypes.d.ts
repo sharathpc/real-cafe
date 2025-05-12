@@ -402,7 +402,6 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    vendors: Schema.Attribute.Relation<'oneToMany', 'api::vendor.vendor'>;
   };
 }
 
@@ -444,7 +443,8 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     user: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
   };
 }
 
@@ -460,7 +460,9 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
+    available: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'> &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -490,42 +492,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-  };
-}
-
-export interface ApiVendorVendor extends Struct.CollectionTypeSchema {
-  collectionName: 'vendors';
-  info: {
-    description: '';
-    displayName: 'Vendor';
-    pluralName: 'vendors';
-    singularName: 'vendor';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::vendor.vendor'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique &
-      Schema.Attribute.SetMinMaxLength<{
-        minLength: 3;
-      }>;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    vendor_user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    vendor: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Required;
   };
 }
 
@@ -1042,7 +1010,6 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::order.order': ApiOrderOrder;
       'api::product.product': ApiProductProduct;
-      'api::vendor.vendor': ApiVendorVendor;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

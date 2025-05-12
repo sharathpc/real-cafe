@@ -13,12 +13,7 @@
   "attributes": {
     "order_status": {
       "type": "enumeration",
-      "enum": [
-        "Placed",
-        "Delivered",
-        "Cancelled",
-        "Discarded"
-      ],
+      "enum": ["Placed", "Delivered", "Cancelled", "Discarded"],
       "default": "Placed",
       "required": true
     },
@@ -33,7 +28,8 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "orders"
+      "inversedBy": "orders",
+      "required": true
     }
   }
 }

@@ -27,15 +27,24 @@
       "type": "media",
       "multiple": false,
       "required": true,
-      "allowedTypes": [
-        "images"
-      ]
+      "allowedTypes": ["images"]
     },
     "category": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::category.category",
-      "inversedBy": "products"
+      "inversedBy": "products",
+      "required": true
+    },
+    "vendor": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user",
+      "required": true
+    },
+    "available": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

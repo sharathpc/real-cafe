@@ -4,13 +4,15 @@ import { Button, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useAuthStore } from "@/store/authStore";
-import { getVendorCategories } from "@/services/Vendor";
+import { getVendorProducts } from "@/services/Vendor";
 
 const Home = () => {
-  const { logout } = useAuthStore();
+  const { logout, user } = useAuthStore();
 
   useEffect(() => {
-    getVendorCategories().then((data) => console.log(data));
+    if (user) {
+      getVendorProducts(user.documentId).then((data) => console.log(data));
+    }
   }, []);
 
   return (

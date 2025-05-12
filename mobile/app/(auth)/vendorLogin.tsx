@@ -8,8 +8,8 @@ import { getStrapiAdminToken } from "@/services/Authentication";
 const VendorLogin = () => {
   const { token, setAuthInfo } = useAuthStore();
   const [loading, setLoading] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("projectc.admin@gmail.com");
-  const [password, setPassword] = useState<string>("Admin@123");
+  const [email, setEmail] = useState<string>("suresh.kumar@gmail.com");
+  const [password, setPassword] = useState<string>("SureshKumar@123");
 
   const handleAdminLogin = async () => {
     getStrapiAdminToken(email, password)
