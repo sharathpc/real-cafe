@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuthStore } from "@/store/authStore";
 import { getVendorProducts } from "@/services/Vendor";
 
-const Home = () => {
+const Dashboard = () => {
   const { logout, user } = useAuthStore();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <SafeAreaView className="flex-1">
-      <Text>Vendor Home</Text>
+      <Text>Vendor Dashboard</Text>
       <View>
         <Button
           title="Logout"
@@ -31,4 +31,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

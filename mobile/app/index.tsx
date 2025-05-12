@@ -19,7 +19,7 @@ export default function Index() {
             return config;
           });
           router.replace(
-            vendorApiToken ? "/(vendor)/home" : "/(employee)/home"
+            vendorApiToken ? "/(vendor)/dashboard" : "/(employee)/home"
           );
         } else {
           logout();

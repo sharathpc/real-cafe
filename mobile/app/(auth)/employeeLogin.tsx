@@ -9,12 +9,10 @@ import {
   Animated,
   Button,
 } from "react-native";
-import { LinearGradient } from "react-native-linear-gradient";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
 
 import { imageData, lightColors } from "@/utils";
-import { ProductSlider } from "@/components";
 import { STRAPI_URL } from "@/constants/Variables";
 import { getStrapiToken } from "@/services/Authentication";
 import { useAuthStore } from "@/store/authStore";
@@ -55,8 +53,6 @@ const EmployeeLogin = () => {
 
   return (
     <SafeAreaView className="flex-1">
-      {/* <ProductSlider /> */}
-      <LinearGradient colors={gradientColors} className="pt-14 w-full" />
       <View className="justify-center items-center w-full px-2.5 pb-2.5">
         <Image source={imageData[7]} className="h-12 w-12 rounded-2xl my-2.5" />
         <Text className="text-2xl font-bold text-gray-80">
