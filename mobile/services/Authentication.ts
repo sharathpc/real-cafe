@@ -14,18 +14,15 @@ const getStrapiToken = (
   );
 };
 
-const getStrapiAdminToken = (
-  email: string,
-  password: string
-): Promise<{
+const getStrapiAdminToken = (credentials: {
+  email: string;
+  password: string;
+}): Promise<{
   token: string;
   user: UserModel;
 }> => {
   return axios
-    .post(`${STRAPI_URL}/admin/login`, {
-      email,
-      password,
-    })
+    .post(`${STRAPI_URL}/admin/login`, credentials)
     .then((response) => response.data.data);
 };
 

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
 import { router } from "expo-router";
 import { Image } from "expo-image";
 import { useFormik } from "formik";
+import * as Yup from "yup";
+import Toast from "react-native-simple-toast";
 
 import { Text } from "@/components/ui/text";
 import { useAuthStore } from "@/store/authStore";
@@ -15,32 +17,44 @@ import { VendorImage } from "@/utils";
 
 const VendorLogin = () => {
   const { token, setAuthInfo } = useAuthStore();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("suresh.kumar@gmail.com");
-  const [password, setPassword] = useState<string>("SureshKumar@123");
 
-  const { handleChange, handleBlur, handleSubmit, values } = useFormik({
+  const {
+    values,
+    errors,
+    touched,
+    isSubmitting,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: "suresh.kumar@gmail.com",
+      password: "SureshKumar@123",
     },
-    onSubmit: (values) => {
-      console.log(values);
+    validationSchema: Yup.object().shape({
+      email: Yup.string()
+        .required("Email is required")
+        .email("Invalid email address"),
+      password: Yup.string().required("Password is required"),
+    }),
+    onSubmit: (values, { setSubmitting }) => {
+      setSubmitting(true);
+      getStrapiAdminToken(values)
+        .then((data) => {
+          setAuthInfo(
+            data.token,
+            data.user,
+            process.env.EXPO_PUBLIC_STRAPI_API_KEY
+          );
+        })
+        .catch((error) => {
+          Toast.show(error.response.data.error.message, Toast.SHORT, {
+            backgroundColor: "#dc2626",
+          });
+        })
+        .finally(() => setSubmitting(false));
     },
   });
-
-  const handleAdminLogin = async () => {
-    getStrapiAdminToken(email, password)
-      .then((data) => {
-        setAuthInfo(
-          data.token,
-          data.user,
-          process.env.EXPO_PUBLIC_STRAPI_API_KEY
-        );
-      })
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-  };
 
   useEffect(() => {
     if (token) {
@@ -66,29 +80,39 @@ const VendorLogin = () => {
               <Label>Email</Label>
               <Input
                 placeholder="Email"
-                //leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-                onChangeText={(text) => setEmail(text)}
-                value={email}
                 autoCapitalize={"none"}
+                value={values.email}
+                onBlur={handleBlur("email")}
+                onChangeText={handleChange("email")}
               />
+              {errors.email && touched.email && (
+                <Text className="text-xs font-medium color-red-600 m-1">
+                  {errors.email}
+                </Text>
+              )}
             </View>
             <View>
               <Label>Password</Label>
               <Input
                 placeholder="Password"
-                //   leftIcon={{ type: 'font-awesome', name: 'lock' }}
-                onChangeText={(text) => setPassword(text)}
-                value={password}
                 secureTextEntry={true}
                 autoCapitalize={"none"}
+                value={values.password}
+                onBlur={handleBlur("password")}
+                onChangeText={handleChange("password")}
               />
+              {errors.password && touched.password && (
+                <Text className="text-xs font-medium color-red-600 m-1">
+                  {errors.password}
+                </Text>
+              )}
             </View>
 
             <View>
               <Button
                 className="flex-0 flex-row justify-center items-center rounded-3xl"
-                disabled={loading}
-                onPress={() => handleAdminLogin()}
+                disabled={isSubmitting}
+                onPress={() => handleSubmit()}
               >
                 <Text>Login</Text>
               </Button>
