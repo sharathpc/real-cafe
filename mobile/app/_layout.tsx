@@ -1,5 +1,6 @@
+import "@/global.css";
+
 import { useEffect } from "react";
-import { useColorScheme } from "react-native";
 import {
   DarkTheme,
   DefaultTheme,
@@ -9,6 +10,8 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+import { PortalHost } from "@rn-primitives/portal";
+import { useColorScheme } from "react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -36,12 +39,10 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(employee)" options={{ headerShown: false }} />
-        {/* <Stack.Screen
-          name="(checkout)/checkout"
-          options={{ headerTitle: "Checkout", headerTitleAlign: "center" }}
-        /> */}
+        <Stack.Screen name="(vendor)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
+      <PortalHost />
     </ThemeProvider>
   );
 }
