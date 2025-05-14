@@ -23,9 +23,7 @@ export default function Index() {
           );
         } else {
           logout();
-          router.replace(
-            vendorApiToken ? "/(auth)/vendorLogin" : "/(auth)/employeeLogin"
-          );
+          router.replace("/(auth)/employeeLogin");
         }
       } else {
         router.replace("/(auth)/employeeLogin");

@@ -1,6 +1,0 @@
-export * from './global/CustomSafeAreaView'
-export * from './login/ProductSlider'
-export * from './home/ProductItem'
-export * from './home/ProductList'
-export * from './home/CategoryTabs/CategoryTabs'
-export * from './home/CategoryTabs/Tab'
