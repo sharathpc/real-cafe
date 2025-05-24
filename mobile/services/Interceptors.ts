@@ -3,9 +3,20 @@ import { Alert } from "react-native";
 
 import { STRAPI_URL } from "@/constants/Variables";
 
+let interceptor: any;
 export const axiosInstance = axios.create({
   baseURL: STRAPI_URL,
 });
+
+export const setAuthInterceptor = (token: string) => {
+  if (interceptor !== undefined) {
+    axiosInstance.interceptors.request.eject(interceptor);
+  }
+  interceptor = axiosInstance.interceptors.request.use((config) => {
+    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  });
+};
 
 axiosInstance.interceptors.response.use(
   (response) => response,

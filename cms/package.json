@@ -15,9 +15,9 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@strapi/plugin-graphql": "^5.12.6",
-    "@strapi/plugin-users-permissions": "5.12.6",
-    "@strapi/strapi": "5.12.6",
+    "@strapi/plugin-graphql": "^5.13.0",
+    "@strapi/plugin-users-permissions": "5.13.0",
+    "@strapi/strapi": "5.13.0",
     "patch-package": "^8.0.0",
     "pg": "^8.16.0",
     "react": "^18.0.0",

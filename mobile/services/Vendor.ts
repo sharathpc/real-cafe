@@ -1,7 +1,19 @@
 import { axiosInstance } from "./Interceptors";
 
+const getAllCategories = (): Promise<any> => {
+  return axiosInstance(`/api/categories`, {
+    params: {
+      fields: ["name"],
+      populate: {
+        image: {
+          fields: ["name", "url"],
+        },
+      },
+    },
+  }).then((response) => response.data);
+};
+
 const getVendorProducts = (vendorId: string): Promise<any> => {
-  console.log(vendorId);
   return axiosInstance(`/api/products`, {
     params: {
       fields: ["name", "price", "available"],
@@ -11,6 +23,11 @@ const getVendorProducts = (vendorId: string): Promise<any> => {
         },
         category: {
           fields: ["name"],
+          populate: {
+            image: {
+              fields: ["name", "url"],
+            },
+          },
         },
       },
       filters: {
@@ -22,4 +39,4 @@ const getVendorProducts = (vendorId: string): Promise<any> => {
   }).then((response) => response.data);
 };
 
-export { getVendorProducts };
+export { getAllCategories, getVendorProducts };

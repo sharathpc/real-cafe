@@ -28,8 +28,8 @@ const VendorLogin = () => {
     handleSubmit,
   } = useFormik({
     initialValues: {
-      email: "suresh.kumar@gmail.com",
-      password: "SureshKumar@123",
+      email: "anthera.kitchen@gmail.com",
+      password: "AntheraKitchen@123",
     },
     validationSchema: Yup.object().shape({
       email: Yup.string()

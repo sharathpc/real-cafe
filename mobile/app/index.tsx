@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import { useAuthStore } from "@/store/authStore";
-import { axiosInstance } from "@/services/Interceptors";
+import { setAuthInterceptor } from "@/services/Interceptors";
 
 export default function Index() {
   const { token, vendorApiToken, logout } = useAuthStore();
@@ -14,10 +14,7 @@ export default function Index() {
       if (token) {
         const decodedJwt: { exp: number } = jwtDecode(token);
         if (decodedJwt.exp * 1000 > Date.now()) {
-          axiosInstance.interceptors.request.use((config) => {
-            config.headers.Authorization = `Bearer ${vendorApiToken ? vendorApiToken : token}`;
-            return config;
-          });
+          setAuthInterceptor(vendorApiToken ?? token);
           router.replace(
             vendorApiToken ? "/(vendor)/dashboard" : "/(employee)/home"
           );
