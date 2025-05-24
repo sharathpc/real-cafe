@@ -8,10 +8,8 @@ const Products = () => {
   const { user } = useAuthStore();
 
   useEffect(() => {
-    if (user) {
-      getAllCategories().then((data) => console.log(data));
-      getVendorProducts(user.documentId).then((data) => console.log(data));
-    }
+    getAllCategories().then((data) => console.log(data));
+    getVendorProducts(user.documentId).then((data) => console.log(data));
   }, []);
 
   return (

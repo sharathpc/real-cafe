@@ -16,7 +16,7 @@ export default function Index() {
         if (decodedJwt.exp * 1000 > Date.now()) {
           setAuthInterceptor(vendorApiToken ?? token);
           router.replace(
-            vendorApiToken ? "/(vendor)/dashboard" : "/(employee)/home"
+            vendorApiToken ? "/(vendor)/(tabs)/dashboard" : "/(employee)/home"
           );
         } else {
           logout();
