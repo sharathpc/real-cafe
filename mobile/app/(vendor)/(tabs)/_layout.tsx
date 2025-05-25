@@ -4,7 +4,14 @@ import { CustomHeader } from "@/components/app/CustomHeader";
 
 export default function TabLayout() {
   return (
-    <Tabs initialRouteName="dashboard">
+    <Tabs
+      initialRouteName="dashboard"
+      screenOptions={{
+        tabBarBadgeStyle: {
+          height: 80,
+        },
+      }}
+    >
       <Tabs.Screen
         name="dashboard"
         options={({ route }) => ({

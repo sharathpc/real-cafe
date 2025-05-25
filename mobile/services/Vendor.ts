@@ -8,35 +8,20 @@ const getAllCategories = (): Promise<any> => {
         image: {
           fields: ["name", "url"],
         },
-      },
-    },
-  }).then((response) => response.data);
-};
-
-const getVendorProducts = (vendorId: string): Promise<any> => {
-  return axiosInstance(`/api/products`, {
-    params: {
-      fields: ["name", "price", "available"],
-      populate: {
-        image: {
-          fields: ["name", "url"],
-        },
-        category: {
-          fields: ["name"],
+        products: {
+          fields: ["name", "available"],
           populate: {
             image: {
               fields: ["name", "url"],
             },
           },
-        },
-      },
-      filters: {
-        vendor: {
-          documentId: vendorId,
+          /* vendor: {
+            fields: ["email"],
+          }, */
         },
       },
     },
   }).then((response) => response.data);
 };
 
-export { getAllCategories, getVendorProducts };
+export { getAllCategories };
