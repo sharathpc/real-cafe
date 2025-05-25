@@ -31,7 +31,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="products"
         options={({ route }) => ({
-          header: () => <CustomHeader title={route.name} />,
+          headerShown: false,
+          //header: () => <CustomHeader title={route.name} />,
           tabBarLabel: "Products",
           tabBarIcon: () => <Feather name="shopping-bag" size={20} />,
         })}

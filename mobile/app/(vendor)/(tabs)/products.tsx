@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import { Input } from "@/components/ui/input";
+import { CustomHeader } from "@/components/app/CustomHeader";
 
 interface Item {
   documentId: string;
@@ -26,7 +27,8 @@ const ITEM_MARGIN = 4;
 const numColumns = 2;
 const ITEM_WIDTH =
   (Dimensions.get("window").width - ITEM_MARGIN * (numColumns * 2 + 1)) /
-  numColumns;
+    numColumns -
+  10;
 const ALL_CATEGORY_ITEM = {
   documentId: "all",
   name: "All",
@@ -82,7 +84,7 @@ const Products = () => {
     return (
       <Pressable
         key={item.documentId}
-        className="flex-1 justify-center items-center w-16 h-auto"
+        className="flex-1 justify-center items-center h-auto"
         onPress={() => setCategoryId(item.documentId)}
       >
         <View className="p-1.5 bg-slate-200 mb-1 rounded-full">
@@ -91,7 +93,12 @@ const Products = () => {
             style={{ width: 24, height: 24 }}
           />
         </View>
-        <Text className="text-[8px] text-center font-bold">{item.name}</Text>
+        <Text
+          style={[item.documentId === categoryId && styles.categorySelected]}
+          className="text-[8px] text-slate-500 px-2 py-0.5 rounded-md text-center font-bold"
+        >
+          {item.name}
+        </Text>
       </Pressable>
     );
   };
@@ -111,8 +118,14 @@ const Products = () => {
     }
 
     return (
-      <View key={item.documentId} className="mt-2">
-        <Text className="text-base font-semibold px-4">{item.name}</Text>
+      <View key={item.documentId} className="mt-2 mx-2">
+        <View className="flex-row mx-2 my-2 items-center">
+          <Image
+            source={{ uri: item.image.url }}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text className="text-base font-semibold ml-2">{item.name}</Text>
+        </View>
         {rows}
       </View>
     );
@@ -125,8 +138,8 @@ const Products = () => {
         style={styles.image}
         contentFit="fill"
       />
-      <View className="flex-row justify-between items-center w-full px-4 py-2">
-        <Text className="text-sm font-medium">{item.name}</Text>
+      <View className="flex-row justify-between items-center w-full px-2 py-2">
+        <Text className="text-base font-medium">{item.name}</Text>
         <Text
           className="text-xs font-medium"
           style={[item.available ? styles.inStock : styles.outOfStock]}
@@ -139,20 +152,27 @@ const Products = () => {
 
   return (
     <View className="flex-1 justify-start">
-      <Input
-        className="mx-4 mb-4"
-        placeholder="Search..."
-        value={query}
-        onChangeText={setQuery}
-        clearButtonMode="while-editing"
-      />
-      <View className="flex-row justify-between items-center mb-4">
-        {[ALL_CATEGORY_ITEM, ...categories].map((item) => renderCategory(item))}
-      </View>
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.documentId}
         contentContainerStyle={{ paddingBottom: 20 }}
+        ListHeaderComponent={() => (
+          <View className="mx-3">
+            <CustomHeader title="Products" />
+            <Input
+              className="mb-4"
+              placeholder="Search..."
+              value={query}
+              onChangeText={setQuery}
+              clearButtonMode="while-editing"
+            />
+            <View className="flex-row justify-between items-center">
+              {[ALL_CATEGORY_ITEM, ...categories].map((item) =>
+                renderCategory(item)
+              )}
+            </View>
+          </View>
+        )}
         renderItem={renderCategoryGroup}
         ListEmptyComponent={<Text>No results found</Text>}
         keyboardShouldPersistTaps="handled"
@@ -162,6 +182,10 @@ const Products = () => {
 };
 
 const styles = StyleSheet.create({
+  categorySelected: {
+    backgroundColor: "#cbd5e1",
+    color: "#475569",
+  },
   card: {
     width: ITEM_WIDTH,
     margin: ITEM_MARGIN,
