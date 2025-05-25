@@ -1,10 +1,12 @@
-import { Text, View } from "react-native";
+import { CustomHeaderScrollView } from "@/components/app/CustomHeaderScrollView";
 
 const Dashboard = () => {
   return (
-    <View className="flex-1">
-      <Text>Vendor Dashboard</Text>
-    </View>
+    <CustomHeaderScrollView
+      title="Dashboard"
+      data={[]}
+      //renderItem={() => ()}
+    ></CustomHeaderScrollView>
   );
 };
 

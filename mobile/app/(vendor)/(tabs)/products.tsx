@@ -2,17 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useAuthStore } from "@/store/authStore";
 import { getAllCategories } from "@/services/Vendor";
 
-import {
-  View,
-  FlatList,
-  Text,
-  StyleSheet,
-  Pressable,
-  Dimensions,
-} from "react-native";
+import { View, Text, StyleSheet, Pressable, Dimensions } from "react-native";
 import { Image } from "expo-image";
 import { Input } from "@/components/ui/input";
-import { CustomHeader } from "@/components/app/CustomHeader";
+import { CustomHeaderScrollView } from "@/components/app/CustomHeaderScrollView";
 
 interface Item {
   documentId: string;
@@ -151,33 +144,27 @@ const Products = () => {
   );
 
   return (
-    <View className="flex-1 justify-start">
-      <FlatList
-        data={filteredData}
-        keyExtractor={(item) => item.documentId}
-        contentContainerStyle={{ paddingBottom: 20 }}
-        ListHeaderComponent={() => (
-          <View className="mx-3">
-            <CustomHeader title="Products" />
-            <Input
-              className="mb-4"
-              placeholder="Search..."
-              value={query}
-              onChangeText={setQuery}
-              clearButtonMode="while-editing"
-            />
-            <View className="flex-row justify-between items-center">
-              {[ALL_CATEGORY_ITEM, ...categories].map((item) =>
-                renderCategory(item)
-              )}
-            </View>
+    <CustomHeaderScrollView
+      title="Products"
+      data={filteredData}
+      header={
+        <View>
+          <Input
+            className="mb-4"
+            placeholder="Search..."
+            value={query}
+            onChangeText={setQuery}
+            clearButtonMode="while-editing"
+          />
+          <View className="flex-row justify-between items-center">
+            {[ALL_CATEGORY_ITEM, ...categories].map((item) =>
+              renderCategory(item)
+            )}
           </View>
-        )}
-        renderItem={renderCategoryGroup}
-        ListEmptyComponent={<Text>No results found</Text>}
-        keyboardShouldPersistTaps="handled"
-      />
-    </View>
+        </View>
+      }
+      renderItem={renderCategoryGroup}
+    ></CustomHeaderScrollView>
   );
 };
 
