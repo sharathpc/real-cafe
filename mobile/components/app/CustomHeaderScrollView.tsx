@@ -17,31 +17,24 @@ export const CustomHeaderScrollView = ({
 }: Props) => {
   return (
     <SafeAreaView className="flex-1 justify-start">
+      <View className="mx-3">
+        <View className="flex-row justify-start items-center pt-4 pb-4">
+          {isBackButton && (
+            <Pressable className="mr-4" onPress={() => router.back()}>
+              <FontAwesome6 name="chevron-left" size={18} />
+            </Pressable>
+          )}
+          <Text
+            className={cn(isBackButton ? "text-xl" : "text-4xl", "font-bold")}
+          >
+            {title}
+          </Text>
+        </View>
+      </View>
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
+        contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
-        <View className="mx-3">
-          <View className="flex-row justify-start items-center pt-4 pb-4">
-            {isBackButton && (
-              <Pressable className="mr-4" onPress={() => router.back()}>
-                <FontAwesome6 name="chevron-left" size={18} />
-              </Pressable>
-            )}
-            <Text
-              className={cn(isBackButton ? "text-xl" : "text-4xl", "font-bold")}
-            >
-              {title}
-            </Text>
-            {/* <Pressable onPress={() => router.push("/profile")}>
-                <Avatar alt={user.firstname}>
-                  <AvatarFallback>
-                    <Text className="uppercase">{`${user.firstname.charAt(0)}${user.lastname.charAt(0)}`}</Text>
-                  </AvatarFallback>
-                </Avatar>
-              </Pressable> */}
-          </View>
-        </View>
         {children}
       </ScrollView>
     </SafeAreaView>

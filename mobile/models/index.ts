@@ -1,4 +1,5 @@
 export * from "./UserModel";
+export * from "./IUserModelUpdate";
 export * from "./ICategory";
 export * from "./IProduct";
 export * from "./IProductUpdate";

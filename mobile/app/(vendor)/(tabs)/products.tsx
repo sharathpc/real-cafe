@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet, Pressable, Dimensions } from "react-native";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 
 import { useAuthStore } from "@/store/authStore";
@@ -68,9 +68,11 @@ const Products = () => {
     });
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getData();
+    }, [])
+  );
 
   const renderCategory = (item: ICategory) => {
     return (

@@ -1,6 +1,5 @@
 import { ReactNode, useState } from "react";
 import { router } from "expo-router";
-import { Image } from "expo-image";
 import {
   View,
   Text,
@@ -10,9 +9,8 @@ import {
   SafeAreaView,
 } from "react-native";
 
-import { useAuthStore } from "@/store/authStore";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { AntDesign } from "@expo/vector-icons";
+import { CustomAvatar } from "./CustomAvatar";
 interface Props {
   title: string;
   data: any[];
@@ -36,7 +34,6 @@ export const CustomHeaderFlatList = ({
   renderItem,
   onRefresh,
 }: Props) => {
-  const { user } = useAuthStore();
   const [refreshing, setRefreshing] = useState(false);
 
   /* const onRefresh = () => {
@@ -60,11 +57,7 @@ export const CustomHeaderFlatList = ({
             <View className="flex-row justify-between items-center pt-4 pb-4">
               <Text className="text-4xl font-bold capitalize">{title}</Text>
               <Pressable onPress={() => router.push("/profile")}>
-                <Avatar alt={user.firstname}>
-                  <AvatarFallback>
-                    <Text className="uppercase">{`${user.firstname.charAt(0)}${user.lastname.charAt(0)}`}</Text>
-                  </AvatarFallback>
-                </Avatar>
+                <CustomAvatar />
               </Pressable>
             </View>
             {header}
