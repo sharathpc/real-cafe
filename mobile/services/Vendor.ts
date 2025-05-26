@@ -1,6 +1,10 @@
+import { ICategory, IMeta, IProduct } from "@/models";
 import { axiosInstance } from "./Interceptors";
 
-const getAllCategories = (): Promise<any> => {
+const getAllCategories = (): Promise<{
+  data: ICategory[];
+  meta: IMeta;
+}> => {
   return axiosInstance(`/api/categories`, {
     params: {
       fields: ["name"],
@@ -24,4 +28,22 @@ const getAllCategories = (): Promise<any> => {
   }).then((response) => response.data);
 };
 
-export { getAllCategories };
+const getProductDetails = (
+  productId: string
+): Promise<{
+  data: IProduct;
+  meta: IMeta;
+}> => {
+  return axiosInstance(`/api/products/${productId}`, {
+    params: {
+      //fields: ["name", "available"],
+      populate: {
+        image: {
+          fields: ["name", "url"],
+        },
+      },
+    },
+  }).then((response) => response.data);
+};
+
+export { getAllCategories, getProductDetails };

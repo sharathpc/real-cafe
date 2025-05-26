@@ -80,7 +80,7 @@ const VendorLogin = () => {
               <Label>Email</Label>
               <Input
                 placeholder="Email"
-                autoCapitalize={"none"}
+                autoCapitalize="none"
                 value={values.email}
                 onBlur={handleBlur("email")}
                 onChangeText={handleChange("email")}
@@ -96,7 +96,7 @@ const VendorLogin = () => {
               <Input
                 placeholder="Password"
                 secureTextEntry={true}
-                autoCapitalize={"none"}
+                autoCapitalize="none"
                 value={values.password}
                 onBlur={handleBlur("password")}
                 onChangeText={handleChange("password")}

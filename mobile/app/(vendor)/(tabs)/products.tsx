@@ -21,6 +21,7 @@ const ALL_CATEGORY_ITEM = {
   documentId: "all",
   name: "All",
   image: {
+    name: "all_img.png",
     url: "https://ik.imagekit.io/projectc/media_library/all_e243121c80_z6D1BiQcC.png",
   },
   products: [],
@@ -129,10 +130,10 @@ const Products = () => {
       key={item.documentId}
       style={[
         styles.card,
-        item.vendor.documentId !== user.documentId && styles.cardInactive,
+        item.vendor?.documentId !== user.documentId && styles.cardInactive,
       ]}
       onPress={() => router.push(`/product/${item.documentId}`)}
-      disabled={item.vendor.documentId !== user.documentId}
+      disabled={item.vendor?.documentId !== user.documentId}
     >
       <Image
         source={{ uri: item.image.url }}

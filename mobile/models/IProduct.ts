@@ -1,3 +1,5 @@
+import { ICategory } from "./ICategory";
+import { IImage } from "./IImage";
 import { IVendor } from "./IVendor";
 
 export interface IProduct {
@@ -5,8 +7,7 @@ export interface IProduct {
   name: string;
   price: number;
   available: boolean;
-  image: {
-    url: string;
-  };
-  vendor: IVendor;
+  image: IImage;
+  vendor?: IVendor;
+  category?: ICategory;
 }
