@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useAuthStore } from "@/store/authStore";
-import { getAllCategories } from "@/services/Vendor";
-
 import { View, Text, StyleSheet, Pressable, Dimensions } from "react-native";
 import { Image } from "expo-image";
+import { router } from "expo-router";
+import { Feather } from "@expo/vector-icons";
+
+import { useAuthStore } from "@/store/authStore";
+import { getAllCategories } from "@/services/Vendor";
 import { Input } from "@/components/ui/input";
 import { CustomHeaderFlatList } from "@/components/app/CustomHeaderFlatList";
 import { ICategory, IProduct } from "@/models";
+import { cn } from "@/lib/utils";
 
 const ITEM_MARGIN = 4;
 const numColumns = 3;
@@ -82,8 +85,10 @@ const Products = () => {
           />
         </View>
         <Text
-          style={[item.documentId === categoryId && styles.categorySelected]}
-          className="text-[8px] text-slate-500 px-2 py-0.5 rounded-md text-center font-bold"
+          className={cn(
+            "text-[8px] text-slate-500 px-2 py-0.5 rounded-md text-center font-bold",
+            item.documentId === categoryId && "bg-slate-300 color-slate-600"
+          )}
         >
           {item.name}
         </Text>
@@ -121,11 +126,12 @@ const Products = () => {
 
   const renderProduct = (item: IProduct) => (
     <Pressable
+      key={item.documentId}
       style={[
         styles.card,
         item.vendor.documentId !== user.documentId && styles.cardInactive,
       ]}
-      key={item.documentId}
+      onPress={() => router.push(`/product/${item.documentId}`)}
       disabled={item.vendor.documentId !== user.documentId}
     >
       <Image
@@ -167,6 +173,10 @@ const Products = () => {
           </View>
         </View>
       }
+      noData={{
+        icon: <Feather name="archive" size={20} />,
+        text: "No Products Found",
+      }}
       renderItem={({ item }) => renderCategoryGroup(item)}
       onRefresh={getData}
     />

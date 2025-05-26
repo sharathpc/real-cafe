@@ -12,10 +12,15 @@ import {
 
 import { useAuthStore } from "@/store/authStore";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { AntDesign } from "@expo/vector-icons";
 interface Props {
   title: string;
   data: any[];
   header?: ReactNode;
+  noData?: {
+    icon: ReactNode;
+    text: string;
+  };
   renderItem?: ListRenderItem<any> | null;
   onRefresh?: (() => void) | null;
 }
@@ -24,6 +29,10 @@ export const CustomHeaderFlatList = ({
   title,
   data,
   header,
+  noData = {
+    icon: <AntDesign name="dashboard" size={80} />,
+    text: "No Data",
+  },
   renderItem,
   onRefresh,
 }: Props) => {
@@ -64,18 +73,9 @@ export const CustomHeaderFlatList = ({
         renderItem={renderItem}
         ListEmptyComponent={
           <View className="flex-1 justify-center items-center opacity-60">
-            <Image
-              source="https://ik.imagekit.io/projectc/media_library/parcel_f524312cf1__rmd5FVxMx.png"
-              style={{
-                width: 80,
-                height: 80,
-              }}
-            />
+            {noData.icon}
             <Text className="text-lg font-bold mt-3 opacity-60">
-              No Records Found
-            </Text>
-            <Text className="text-sm font-medium opacity-70">
-              Please start adding records
+              {noData.text}
             </Text>
           </View>
         }

@@ -4,7 +4,7 @@ import { CustomHeaderScrollView } from "@/components/app/CustomHeaderScrollView"
 
 const Product = () => {
   return (
-    <CustomHeaderScrollView title="Product">
+    <CustomHeaderScrollView title="Product" isBackButton={true}>
       <View>
         <Text>Test</Text>
       </View>
