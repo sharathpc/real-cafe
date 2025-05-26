@@ -66,11 +66,14 @@ const Products = () => {
     setFilteredData(filteredCategories);
   }, [query, categories, categoryId]);
 
-  useEffect(() => {
+  const getData = () => {
     getAllCategories().then((data) => {
-      console.log(data.data);
       setCategories(data.data);
     });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   const renderCategory = (item: Item) => {
@@ -164,7 +167,8 @@ const Products = () => {
         </View>
       }
       renderItem={renderCategoryGroup}
-    ></CustomHeaderScrollView>
+      onRefresh={getData}
+    />
   );
 };
 
