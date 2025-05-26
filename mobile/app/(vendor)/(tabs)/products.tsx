@@ -5,23 +5,15 @@ import { getAllCategories } from "@/services/Vendor";
 import { View, Text, StyleSheet, Pressable, Dimensions } from "react-native";
 import { Image } from "expo-image";
 import { Input } from "@/components/ui/input";
-import { CustomHeaderScrollView } from "@/components/app/CustomHeaderScrollView";
-
-interface Item {
-  documentId: string;
-  name: string;
-  image: {
-    url: string;
-  };
-  products: any[];
-}
+import { CustomHeaderFlatList } from "@/components/app/CustomHeaderFlatList";
+import { ICategory, IProduct } from "@/models";
 
 const ITEM_MARGIN = 4;
-const numColumns = 2;
+const numColumns = 3;
 const ITEM_WIDTH =
   (Dimensions.get("window").width - ITEM_MARGIN * (numColumns * 2 + 1)) /
     numColumns -
-  10;
+  3;
 const ALL_CATEGORY_ITEM = {
   documentId: "all",
   name: "All",
@@ -34,12 +26,12 @@ const ALL_CATEGORY_ITEM = {
 const Products = () => {
   const [query, setQuery] = useState("");
   const [categoryId, setCategoryId] = useState("all");
-  const [categories, setCategories] = useState<Item[]>([]);
-  const [filteredData, setFilteredData] = useState<Item[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [filteredData, setFilteredData] = useState<ICategory[]>([]);
   const { user } = useAuthStore();
 
   useEffect(() => {
-    let filteredCategories: Item[] = [];
+    let filteredCategories: ICategory[] = [];
     if (query) {
       categories.forEach((category) => {
         const newCategory = {
@@ -76,7 +68,7 @@ const Products = () => {
     getData();
   }, []);
 
-  const renderCategory = (item: Item) => {
+  const renderCategory = (item: ICategory) => {
     return (
       <Pressable
         key={item.documentId}
@@ -99,14 +91,14 @@ const Products = () => {
     );
   };
 
-  const renderCategoryGroup = ({ item }: { item: Item }) => {
+  const renderCategoryGroup = (item: ICategory) => {
     const rows = [];
     for (let i = 0; i < item.products.length; i += numColumns) {
       const rowItems = item.products.slice(i, i + numColumns);
       rows.push(
         <View
           key={`row-${item.documentId}-${i}`}
-          className="flex-row justify-between"
+          className="flex-row justify-start"
         >
           {rowItems.map(renderProduct)}
         </View>
@@ -120,25 +112,34 @@ const Products = () => {
             source={{ uri: item.image.url }}
             style={{ width: 20, height: 20 }}
           />
-          <Text className="text-base font-semibold ml-2">{item.name}</Text>
+          <Text className="font-semibold ml-2">{item.name}</Text>
         </View>
         {rows}
       </View>
     );
   };
 
-  const renderProduct = (item: any) => (
-    <Pressable style={styles.card} key={item.documentId}>
+  const renderProduct = (item: IProduct) => (
+    <Pressable
+      style={[
+        styles.card,
+        item.vendor.documentId !== user.documentId && styles.cardInactive,
+      ]}
+      key={item.documentId}
+      disabled={item.vendor.documentId !== user.documentId}
+    >
       <Image
         source={{ uri: item.image.url }}
         style={styles.image}
         contentFit="fill"
       />
-      <View className="flex-row justify-between items-center w-full px-2 py-2">
-        <Text className="text-base font-medium">{item.name}</Text>
+      <View className="items-start w-full px-2 py-2">
+        <Text numberOfLines={1} className="text-sm font-semibold">
+          {item.name}
+        </Text>
         <Text
           className="text-xs font-medium"
-          style={[item.available ? styles.inStock : styles.outOfStock]}
+          style={{ color: item.available ? "green" : "red" }}
         >
           {item.available ? "In Stock" : "Out of Stock"}
         </Text>
@@ -147,7 +148,7 @@ const Products = () => {
   );
 
   return (
-    <CustomHeaderScrollView
+    <CustomHeaderFlatList
       title="Products"
       data={filteredData}
       header={
@@ -166,7 +167,7 @@ const Products = () => {
           </View>
         </View>
       }
-      renderItem={renderCategoryGroup}
+      renderItem={({ item }) => renderCategoryGroup(item)}
       onRefresh={getData}
     />
   );
@@ -187,13 +188,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
+  cardInactive: {
+    opacity: 0.6,
+  },
   image: {
     width: "100%",
-    height: 160,
+    height: 100,
     backgroundColor: "#e2e8f0",
   },
-  inStock: { color: "green" },
-  outOfStock: { color: "red" },
 });
 
 export default Products;

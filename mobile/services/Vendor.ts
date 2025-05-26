@@ -14,10 +14,10 @@ const getAllCategories = (): Promise<any> => {
             image: {
               fields: ["name", "url"],
             },
+            vendor: {
+              fields: ["username"],
+            },
           },
-          /* vendor: {
-            fields: ["email"],
-          }, */
         },
       },
     },

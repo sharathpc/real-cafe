@@ -1,12 +1,10 @@
+import { View, Text } from "react-native";
+import React from "react";
 import { CustomHeaderScrollView } from "@/components/app/CustomHeaderScrollView";
-import { Text, View } from "react-native";
 
-const Dashboard = () => {
+const Product = () => {
   return (
-    <CustomHeaderScrollView
-      title="Dashboard"
-      //renderItem={() => ()}
-    >
+    <CustomHeaderScrollView title="Product">
       <View>
         <Text>Test</Text>
       </View>
@@ -14,4 +12,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Product;

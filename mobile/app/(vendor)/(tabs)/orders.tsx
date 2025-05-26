@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { CustomHeaderScrollView } from "@/components/app/CustomHeaderScrollView";
 import { View } from "react-native";
+
 import { Input } from "@/components/ui/input";
+import { CustomHeaderFlatList } from "@/components/app/CustomHeaderFlatList";
 
 const Orders = () => {
   const [query, setQuery] = useState("");
 
   return (
-    <CustomHeaderScrollView
+    <CustomHeaderFlatList
       title="Orders"
       data={[]}
       header={
@@ -27,7 +28,7 @@ const Orders = () => {
         </View>
       }
       //renderItem={() => ()}
-    ></CustomHeaderScrollView>
+    ></CustomHeaderFlatList>
   );
 };
 
