@@ -1,19 +1,21 @@
-import { ICategory, IMeta, IProduct } from "@/models";
+import { ICategory, IMeta, IProduct, IProductUpdate } from "@/models";
 import { axiosInstance } from "./Interceptors";
 
-const getAllCategories = (): Promise<{
+const getAllCategoriesWithProducts = (): Promise<{
   data: ICategory[];
   meta: IMeta;
 }> => {
   return axiosInstance(`/api/categories`, {
     params: {
       fields: ["name"],
+      sort: ["name"],
       populate: {
         image: {
           fields: ["name", "url"],
         },
         products: {
           fields: ["name", "available"],
+          sort: ["name"],
           populate: {
             image: {
               fields: ["name", "url"],
@@ -36,7 +38,24 @@ const getProductDetails = (
 }> => {
   return axiosInstance(`/api/products/${productId}`, {
     params: {
-      //fields: ["name", "available"],
+      populate: {
+        image: {
+          fields: ["name", "url"],
+        },
+        category: {
+          fields: ["name"],
+        },
+      },
+    },
+  }).then((response) => response.data);
+};
+
+const getAllCategories = (): Promise<{
+  data: ICategory[];
+  meta: IMeta;
+}> => {
+  return axiosInstance(`/api/categories`, {
+    params: {
       populate: {
         image: {
           fields: ["name", "url"],
@@ -46,4 +65,23 @@ const getProductDetails = (
   }).then((response) => response.data);
 };
 
-export { getAllCategories, getProductDetails };
+const updateProductDetails = (
+  productId: string,
+  payload: IProductUpdate
+): Promise<void> => {
+  return axiosInstance.put(`/api/products/${productId}`, {
+    data: {
+      ...payload,
+      category: {
+        connect: [payload.category.value],
+      },
+    },
+  });
+};
+
+export {
+  getAllCategoriesWithProducts,
+  getProductDetails,
+  getAllCategories,
+  updateProductDetails,
+};

@@ -1,20 +1,36 @@
 import { View, Text } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import { CustomHeaderScrollView } from "@/components/app/CustomHeaderScrollView";
-import { getProductDetails } from "@/services/Vendor";
+import {
+  getAllCategories,
+  getProductDetails,
+  updateProductDetails,
+} from "@/services/Vendor";
 import { Button } from "@/components/ui/button";
-import { IProduct } from "@/models";
+import { ICategory, IProduct, IProductUpdate } from "@/models";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Product = () => {
+  const insets = useSafeAreaInsets();
+
   const { productId } = useLocalSearchParams<{ productId: string }>();
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const {
     values,
     errors,
@@ -35,6 +51,14 @@ const Product = () => {
         name: "",
         url: "",
       },
+      category: {
+        documentId: "",
+        name: "",
+        image: {
+          name: "",
+          url: "",
+        },
+      },
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Name is required"),
@@ -42,14 +66,31 @@ const Product = () => {
       available: Yup.boolean(),
     }),
     onSubmit: (values, { setSubmitting }) => {
-      setSubmitting(true);
+      if (values.category) {
+        setSubmitting(true);
+        updateProductDetails(productId, {
+          name: values.name,
+          price: values.price,
+          available: values.available,
+          category: {
+            label: values.category?.name,
+            value: values.category?.documentId,
+          },
+        }).finally(() => setSubmitting(false));
+      }
     },
   });
 
   useEffect(() => {
-    getProductDetails(productId).then((data) => {
-      setValues(data.data);
-    });
+    const categoriesPromise = getAllCategories();
+    const productPromise = getProductDetails(productId);
+
+    Promise.all([categoriesPromise, productPromise]).then(
+      ([categories, product]) => {
+        setCategories(categories.data);
+        setValues(product.data);
+      }
+    );
   }, []);
 
   return (
@@ -61,7 +102,7 @@ const Product = () => {
         <View className="w-full h-96 bg-slate-200">
           <Image
             source={values.image.url}
-            contentFit="fill"
+            contentFit="cover"
             style={{ width: "100%", height: "100%" }}
           />
         </View>
@@ -115,6 +156,56 @@ const Product = () => {
                 </Label>
               </View>
             </View>
+          </View>
+          <View>
+            <Label>Category</Label>
+            <Select
+              value={
+                values.category && {
+                  label: values.category.name,
+                  value: values.category.documentId,
+                }
+              }
+              onValueChange={(option) => {
+                setFieldValue("category", {
+                  name: option?.label,
+                  documentId: option?.value,
+                });
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue
+                  className="text-foreground text-sm native:text-lg"
+                  placeholder="Select a category"
+                />
+              </SelectTrigger>
+              <SelectContent
+                className="w-full"
+                insets={{
+                  top: insets.top,
+                  bottom: insets.bottom,
+                  left: 12,
+                  right: 12,
+                }}
+              >
+                <SelectGroup>
+                  {categories.map((item) => (
+                    <SelectItem
+                      key={item.documentId}
+                      label={item.name}
+                      value={item.documentId}
+                    >
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {errors.category && touched.category && (
+              <Text className="text-xs font-medium color-red-600 m-1">
+                {errors.category as string}
+              </Text>
+            )}
           </View>
 
           <View>

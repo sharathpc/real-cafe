@@ -5,5 +5,5 @@ export interface ICategory {
   documentId: string;
   name: string;
   image: IImage;
-  products: IProduct[];
+  products?: IProduct[];
 }

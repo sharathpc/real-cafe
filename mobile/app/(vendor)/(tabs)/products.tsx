@@ -5,7 +5,7 @@ import { router } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 
 import { useAuthStore } from "@/store/authStore";
-import { getAllCategories } from "@/services/Vendor";
+import { getAllCategoriesWithProducts } from "@/services/Vendor";
 import { Input } from "@/components/ui/input";
 import { CustomHeaderFlatList } from "@/components/app/CustomHeaderFlatList";
 import { ICategory, IProduct } from "@/models";
@@ -40,12 +40,12 @@ const Products = () => {
       categories.forEach((category) => {
         const newCategory = {
           ...category,
-          products: category.products.filter((item) =>
+          products: category.products?.filter((item) =>
             item.name.toLowerCase().includes(query.toLowerCase())
           ),
         };
 
-        if (newCategory.products.length) {
+        if (newCategory.products?.length) {
           filteredCategories.push(newCategory);
         }
       });
@@ -63,7 +63,7 @@ const Products = () => {
   }, [query, categories, categoryId]);
 
   const getData = () => {
-    getAllCategories().then((data) => {
+    getAllCategoriesWithProducts().then((data) => {
       setCategories(data.data);
     });
   };
@@ -99,16 +99,18 @@ const Products = () => {
 
   const renderCategoryGroup = (item: ICategory) => {
     const rows = [];
-    for (let i = 0; i < item.products.length; i += numColumns) {
-      const rowItems = item.products.slice(i, i + numColumns);
-      rows.push(
-        <View
-          key={`row-${item.documentId}-${i}`}
-          className="flex-row justify-start"
-        >
-          {rowItems.map(renderProduct)}
-        </View>
-      );
+    if (item.products) {
+      for (let i = 0; i < item.products.length; i += numColumns) {
+        const rowItems = item.products.slice(i, i + numColumns);
+        rows.push(
+          <View
+            key={`row-${item.documentId}-${i}`}
+            className="flex-row justify-start"
+          >
+            {rowItems.map(renderProduct)}
+          </View>
+        );
+      }
     }
 
     return (
@@ -175,7 +177,7 @@ const Products = () => {
         </View>
       }
       noData={{
-        icon: <Feather name="archive" size={20} />,
+        icon: <Feather name="shopping-bag" size={80} />,
         text: "No Products Found",
       }}
       renderItem={({ item }) => renderCategoryGroup(item)}
