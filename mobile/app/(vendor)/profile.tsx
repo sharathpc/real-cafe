@@ -6,12 +6,12 @@ import { router } from "expo-router";
 
 import { useAuthStore } from "@/store/authStore";
 import { CustomHeaderScrollView } from "@/components/app/CustomHeaderScrollView";
-import { CustomAvatar } from "@/components/app/CustomAvatar";
+import { UserAvatar } from "@/components/app/UserAvatar";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { IUserModelUpdate } from "@/models";
+import { IUserUpdate } from "@/models";
 
 const Profile = () => {
   const { user, logout } = useAuthStore();
@@ -24,7 +24,7 @@ const Profile = () => {
     handleChange,
     handleBlur,
     handleSubmit,
-  } = useFormik<IUserModelUpdate>({
+  } = useFormik<IUserUpdate>({
     initialValues: {
       documentId: user.documentId,
       firstname: user.firstname,
@@ -47,7 +47,7 @@ const Profile = () => {
     <CustomHeaderScrollView title="Profile" isBackButton={true}>
       <View className="flex-1 justify-between items-center">
         <View className="justify-between items-center">
-          <CustomAvatar size={128} className="m-4" />
+          <UserAvatar user={user} size={128} className="m-4" />
           <Button
             size={"link"}
             variant={"link"}

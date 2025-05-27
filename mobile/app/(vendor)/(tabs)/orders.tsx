@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import { Input } from "@/components/ui/input";
 import { CustomHeaderFlatList } from "@/components/app/CustomHeaderFlatList";
+import { getAllOrders } from "@/services/Vendor";
+import { useAuthStore } from "@/store/authStore";
 
 const Orders = () => {
+  const { user } = useAuthStore();
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    getAllOrders(user.documentId).then((data) => {
+      console.log(data);
+    });
+  }, []);
 
   return (
     <CustomHeaderFlatList

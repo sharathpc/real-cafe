@@ -10,7 +10,9 @@ import {
 } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
-import { CustomAvatar } from "./CustomAvatar";
+import { UserAvatar } from "./UserAvatar";
+import { useAuthStore } from "@/store/authStore";
+
 interface Props {
   title: string;
   data: any[];
@@ -34,6 +36,7 @@ export const CustomHeaderFlatList = ({
   renderItem,
   onRefresh,
 }: Props) => {
+  const { user } = useAuthStore();
   const [refreshing, setRefreshing] = useState(false);
 
   /* const onRefresh = () => {
@@ -57,7 +60,7 @@ export const CustomHeaderFlatList = ({
             <View className="flex-row justify-between items-center pt-4 pb-4">
               <Text className="text-4xl font-bold capitalize">{title}</Text>
               <Pressable onPress={() => router.push("/profile")}>
-                <CustomAvatar />
+                <UserAvatar user={user} />
               </Pressable>
             </View>
             {header}

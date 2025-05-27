@@ -1,16 +1,15 @@
 import { Text } from "react-native";
 
-import { useAuthStore } from "@/store/authStore";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { IUser } from "@/models";
 
 interface Props {
+  user: IUser;
   className?: string;
   size?: number;
 }
 
-export const CustomAvatar = ({ size = 32, className, ...props }: Props) => {
-  const { user } = useAuthStore();
-
+export const UserAvatar = ({ user, size = 32, className, ...props }: Props) => {
   return (
     <Avatar
       alt={user.firstname}

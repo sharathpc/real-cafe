@@ -1,6 +1,6 @@
-export interface IVendor {
+export interface IUserUpdate {
   documentId: string;
-  username: string;
+  email: string;
   firstname: string;
   lastname: string;
 }

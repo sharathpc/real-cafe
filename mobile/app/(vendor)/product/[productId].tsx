@@ -12,7 +12,7 @@ import {
   updateProductDetails,
 } from "@/services/Vendor";
 import { Button } from "@/components/ui/button";
-import { ICategory, IProduct, IProductUpdate } from "@/models";
+import { ICategory, IProduct } from "@/models";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";

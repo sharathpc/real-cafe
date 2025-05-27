@@ -1,5 +1,45 @@
-import { ICategory, IMeta, IProduct, IProductUpdate } from "@/models";
+import {
+  ICategory,
+  IMeta,
+  IProduct,
+  IProductUpdate,
+  IVendorOrder,
+} from "@/models";
 import { axiosInstance } from "./Interceptors";
+
+const getAllOrders = (
+  vendorId: string
+): Promise<{
+  data: IVendorOrder[];
+  meta: IMeta;
+}> => {
+  return axiosInstance(`/api/orders`, {
+    params: {
+      fields: ["order_status"],
+      populate: {
+        items: {
+          fields: ["quantity"],
+          populate: {
+            product: {
+              fields: ["name"],
+              populate: {
+                image: {
+                  fields: ["name", "url"],
+                },
+                vendor: {
+                  fields: ["username"],
+                },
+              },
+            },
+          },
+        },
+        user: {
+          fields: ["email", "firstname", "lastname"],
+        },
+      },
+    },
+  }).then((response) => response.data);
+};
 
 const getAllCategoriesWithProducts = (): Promise<{
   data: ICategory[];
@@ -80,6 +120,7 @@ const updateProductDetails = (
 };
 
 export {
+  getAllOrders,
   getAllCategoriesWithProducts,
   getProductDetails,
   getAllCategories,

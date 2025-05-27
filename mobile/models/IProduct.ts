@@ -1,6 +1,6 @@
 import { ICategory } from "./ICategory";
 import { IImage } from "./IImage";
-import { IVendor } from "./IVendor";
+import { IUser } from "./IUser";
 
 export interface IProduct {
   documentId: string;
@@ -8,6 +8,6 @@ export interface IProduct {
   price: number;
   available: boolean;
   image: IImage;
-  vendor?: IVendor;
+  vendor?: IUser;
   category?: ICategory;
 }
