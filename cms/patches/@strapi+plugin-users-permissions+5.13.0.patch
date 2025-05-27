@@ -21,10 +21,10 @@ index 121eb57..425657e 100644
                      }
                  }
 diff --git a/node_modules/@strapi/plugin-users-permissions/dist/server/services/providers-registry.js b/node_modules/@strapi/plugin-users-permissions/dist/server/services/providers-registry.js
-index 9063695..595f47a 100644
+index 9063695..33d2c04 100644
 --- a/node_modules/@strapi/plugin-users-permissions/dist/server/services/providers-registry.js
 +++ b/node_modules/@strapi/plugin-users-permissions/dist/server/services/providers-registry.js
-@@ -509,7 +509,30 @@ function requireProvidersRegistry() {
+@@ -509,7 +509,32 @@ function requireProvidersRegistry() {
                          };
                      });
                  }
@@ -47,8 +47,10 @@ index 9063695..595f47a 100644
 +                    });
 +                    return unified.get('userinfo').auth(accessToken).request().then(({ body }) => {
 +                        return {
-+                            username: `${body.firstName} ${body.lastName}`,
++                            username: body.loginName,
 +                            email: body.loginName,
++                            firstname: body.firstName,
++                            lastname: body.lastName,
 +                        };
 +                    });
 +                },

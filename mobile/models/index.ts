@@ -1,4 +1,4 @@
-export * from "./UserModel";
+export * from "./IUserModel";
 export * from "./IUserModelUpdate";
 export * from "./ICategory";
 export * from "./IProduct";
