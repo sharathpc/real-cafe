@@ -1,26 +1,89 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { Image } from "expo-image";
+import { DateTime } from "luxon";
 
 import { Input } from "@/components/ui/input";
 import { CustomHeaderFlatList } from "@/components/app/CustomHeaderFlatList";
 import { getAllOrders } from "@/services/Vendor";
 import { useAuthStore } from "@/store/authStore";
+import { IVendorOrder } from "@/models";
+import { UserAvatar } from "@/components/app/UserAvatar";
+
+const ITEM_MARGIN = 10;
+const ITEM_WIDTH = Dimensions.get("window").width - ITEM_MARGIN * 2;
 
 const Orders = () => {
   const { user } = useAuthStore();
   const [query, setQuery] = useState("");
+  const [orders, setOrders] = useState<IVendorOrder[]>([]);
+  //const [filteredData, setFilteredData] = useState<IVendorOrder[]>([]);
 
-  useEffect(() => {
+  const getTotalAmount = (order: IVendorOrder) => {
+    return order.items.reduce(
+      (total, item) => item.product.price * item.quantity + total,
+      0
+    );
+  };
+
+  const renderOrder = (order: IVendorOrder) => {
+    return (
+      <View key={order.documentId} style={styles.card}>
+        <View className="flex-row justify-between items-center">
+          <View className="flex-row justify-start items-center">
+            <UserAvatar user={order.user} size={28} />
+            <Text numberOfLines={1} className="text-sm ml-2 font-semibold">
+              {`${order.user.firstname} ${order.user.lastname}`}
+            </Text>
+          </View>
+          <Text numberOfLines={1} className="text-sm font-semibold">
+            {order.order_status}
+          </Text>
+        </View>
+
+        <View className="items-start mt-2 gap-1">
+          {order.items.map((item) => (
+            <View key={item.id} className="flex-row items-center">
+              <Image
+                source={{ uri: item.product.image.url }}
+                style={styles.image}
+                contentFit="fill"
+              />
+              <Text numberOfLines={1} className="text-sm ml-2 font-medium">
+                {`${item.quantity} x ${item.product.name}`}
+              </Text>
+            </View>
+          ))}
+        </View>
+
+        <View className="flex-row justify-between items-center mt-2">
+          <Text className="text-xs">
+            {`Order placed on ${DateTime.fromISO(order.createdAt).toFormat("LLL d 'at' t")}`}
+          </Text>
+          <Text className="text-xs font-semibold">
+            {`₹ ${getTotalAmount(order)}`}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
+  const getData = () => {
     getAllOrders(user.documentId).then((data) => {
       console.log(data);
+      setOrders(data.data);
     });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
     <CustomHeaderFlatList
       title="Orders"
-      data={[]}
+      data={orders}
       header={
         <View>
           <Input
@@ -36,9 +99,30 @@ const Orders = () => {
         icon: <Feather name="archive" size={80} />,
         text: "No Orders Found",
       }}
-      //renderItem={() => ()}
+      renderItem={({ item }) => renderOrder(item)}
+      onRefresh={getData}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    display: "flex",
+    width: ITEM_WIDTH,
+    margin: ITEM_MARGIN,
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: "#fafafa",
+    borderColor: "#eee",
+    borderWidth: 1,
+    overflow: "hidden",
+  },
+  image: {
+    width: 18,
+    height: 18,
+    backgroundColor: "#e2e8f0",
+    borderRadius: 6,
+  },
+});
 
 export default Orders;

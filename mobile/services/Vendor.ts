@@ -17,13 +17,13 @@ const getAllOrders = (
 }> => {
   return axiosInstance(`/api/orders`, {
     params: {
-      fields: ["order_status"],
+      fields: ["order_status", "createdAt", "updatedAt"],
       populate: {
         items: {
           fields: ["quantity"],
           populate: {
             product: {
-              fields: ["name"],
+              fields: ["name", "price"],
               populate: {
                 image: {
                   fields: ["name", "url"],
