@@ -1,18 +1,15 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-import { IUserModel } from "@/models";
+import { IUser } from "@/models";
 import { MmkvStorage } from "./mmkvStorage";
 
 interface AuthStore {
   token: string | null;
-  user: IUserModel;
+  user: IUser;
   vendorApiToken: string | null;
-  setAuthInfo: (
-    token: string,
-    user: IUserModel,
-    vendorApiToken?: string
-  ) => void;
+  setAuthInfo: (token: string, user: IUser, vendorApiToken?: string) => void;
+  setUserInfo: (user: IUser) => void;
   logout: () => void;
 }
 
@@ -40,6 +37,7 @@ export const useAuthStore = create<AuthStore>()(
       vendorApiToken: null,
       setAuthInfo: (token, user, vendorApiToken) =>
         set({ token, user, vendorApiToken }),
+      setUserInfo: (user) => set({ user }),
       logout: () => set({ token: null, user: USER_DEFAULT_DATA }),
     }),
     {

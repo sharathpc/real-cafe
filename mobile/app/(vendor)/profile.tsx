@@ -12,9 +12,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { IUserUpdate } from "@/models";
+import { updateVendorDetails } from "@/services/Vendor";
 
 const Profile = () => {
-  const { user, logout } = useAuthStore();
+  const { token, user, setUserInfo, logout } = useAuthStore();
 
   const {
     values,
@@ -26,7 +27,6 @@ const Profile = () => {
     handleSubmit,
   } = useFormik<IUserUpdate>({
     initialValues: {
-      documentId: user.documentId,
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
@@ -39,7 +39,16 @@ const Profile = () => {
         .email("Invalid email address"),
     }),
     onSubmit: (values, { setSubmitting }) => {
-      setSubmitting(true);
+      if (token) {
+        setSubmitting(true);
+        console.log(token);
+        updateVendorDetails(user.id, token, values)
+          .then((data) => {
+            setUserInfo(data.data);
+            router.back();
+          })
+          .finally(() => setSubmitting(false));
+      }
     },
   });
 

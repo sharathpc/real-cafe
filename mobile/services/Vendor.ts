@@ -3,6 +3,8 @@ import {
   IMeta,
   IProduct,
   IProductUpdate,
+  IUser,
+  IUserUpdate,
   IVendorOrder,
 } from "@/models";
 import { axiosInstance } from "./Interceptors";
@@ -119,10 +121,31 @@ const updateProductDetails = (
   });
 };
 
+const updateVendorDetails = (
+  vendorId: number,
+  token: string,
+  payload: IUserUpdate
+): Promise<{ data: IUser }> => {
+  return axiosInstance
+    .put(
+      `/admin/users/${vendorId}`,
+      {
+        ...payload,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 export {
   getAllOrders,
   getAllCategoriesWithProducts,
   getProductDetails,
   getAllCategories,
   updateProductDetails,
+  updateVendorDetails,
 };

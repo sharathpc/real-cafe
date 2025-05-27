@@ -41,6 +41,7 @@ const VendorLogin = () => {
       setSubmitting(true);
       getStrapiAdminToken(values)
         .then((data) => {
+          console.log(data.token);
           setAuthInfo(
             data.token,
             data.user,

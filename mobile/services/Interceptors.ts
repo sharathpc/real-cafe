@@ -13,7 +13,7 @@ export const setAuthInterceptor = (token: string) => {
     axiosInstance.interceptors.request.eject(interceptor);
   }
   interceptor = axiosInstance.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization ??= `Bearer ${token}`;
     return config;
   });
 };
