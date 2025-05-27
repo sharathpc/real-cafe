@@ -42,7 +42,7 @@ const Orders = () => {
           </Text>
         </View>
 
-        <View className="items-start mt-2 gap-1">
+        <View className="items-start mt-4 gap-1">
           {order.items.map((item) => (
             <View key={item.id} className="flex-row items-center">
               <Image
@@ -57,7 +57,7 @@ const Orders = () => {
           ))}
         </View>
 
-        <View className="flex-row justify-between items-center mt-2">
+        <View className="flex-row justify-between items-center mt-4">
           <Text className="text-xs">
             {`Order placed on ${DateTime.fromISO(order.createdAt).toFormat("LLL d 'at' t")}`}
           </Text>

@@ -34,9 +34,25 @@ const getAllOrders = (
               },
             },
           },
+          filters: {
+            product: {
+              vendor: {
+                documentId: vendorId,
+              },
+            },
+          },
         },
         user: {
           fields: ["email", "firstname", "lastname"],
+        },
+      },
+      filters: {
+        items: {
+          product: {
+            vendor: {
+              documentId: vendorId,
+            },
+          },
         },
       },
     },
