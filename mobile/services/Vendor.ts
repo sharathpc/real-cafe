@@ -10,7 +10,9 @@ import {
 import { axiosInstance } from "./Interceptors";
 
 const getAllOrders = (
-  vendorId: string
+  vendorId: string,
+  startDate: string,
+  endDate: string
 ): Promise<{
   data: IVendorOrder[];
   meta: IMeta;
@@ -18,6 +20,7 @@ const getAllOrders = (
   return axiosInstance(`/api/orders`, {
     params: {
       fields: ["order_status", "createdAt", "updatedAt"],
+      sort: ["createdAt:desc"],
       populate: {
         items: {
           fields: ["quantity"],
@@ -47,6 +50,10 @@ const getAllOrders = (
         },
       },
       filters: {
+        createdAt: {
+          $gte: startDate,
+          $lt: endDate,
+        },
         items: {
           product: {
             vendor: {
