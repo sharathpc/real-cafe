@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { router } from "expo-router";
 import {
   View,
@@ -16,6 +16,7 @@ import { useAuthStore } from "@/store/authStore";
 interface Props {
   title: string;
   data: any[];
+  refreshing?: boolean;
   header?: ReactNode;
   noData?: {
     icon: ReactNode;
@@ -28,6 +29,7 @@ interface Props {
 export const CustomHeaderFlatList = ({
   title,
   data,
+  refreshing = false,
   header,
   noData = {
     icon: <AntDesign name="dashboard" size={80} />,
@@ -37,17 +39,6 @@ export const CustomHeaderFlatList = ({
   onRefresh,
 }: Props) => {
   const { user } = useAuthStore();
-  const [refreshing, setRefreshing] = useState(false);
-
-  /* const onRefresh = () => {
-    setRefreshing(true);
-    console.log("testing");
-    // Simulate a network request
-    setTimeout(() => {
-      setRefreshing(false);
-      // You could re-fetch product data here
-    }, 3000);
-  }; */
 
   return (
     <SafeAreaView className="flex-1 justify-start">

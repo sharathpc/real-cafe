@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { CustomHeaderFlatList } from "@/components/app/CustomHeaderFlatList";
 import { ICategory, IProduct } from "@/models";
 import { cn } from "@/lib/utils";
+import { CustomLoadingContainer } from "@/components/app/CustomLoadingContainer";
 
 const ITEM_MARGIN = 4;
 const numColumns = 3;
@@ -28,11 +29,12 @@ const ALL_CATEGORY_ITEM = {
 };
 
 const Products = () => {
+  const { user } = useAuthStore();
   const [query, setQuery] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
   const [categoryId, setCategoryId] = useState("all");
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [filteredData, setFilteredData] = useState<ICategory[]>([]);
-  const { user } = useAuthStore();
 
   useEffect(() => {
     let filteredCategories: ICategory[] = [];
@@ -63,9 +65,12 @@ const Products = () => {
   }, [query, categories, categoryId]);
 
   const getData = () => {
-    getAllCategoriesWithProducts().then((data) => {
-      setCategories(data.data);
-    });
+    setRefreshing(true);
+    getAllCategoriesWithProducts()
+      .then((data) => {
+        setCategories(data.data);
+      })
+      .finally(() => setRefreshing(false));
   };
 
   useFocusEffect(
@@ -159,32 +164,35 @@ const Products = () => {
   );
 
   return (
-    <CustomHeaderFlatList
-      title="Products"
-      data={filteredData}
-      header={
-        <View>
-          <Input
-            className="mb-4"
-            placeholder="Search..."
-            value={query}
-            onChangeText={setQuery}
-            clearButtonMode="while-editing"
-          />
-          <View className="flex-row justify-between items-center">
-            {[ALL_CATEGORY_ITEM, ...categories].map((item) =>
-              renderCategory(item)
-            )}
+    <CustomLoadingContainer loading={refreshing && categories.length == 0}>
+      <CustomHeaderFlatList
+        title="Products"
+        data={filteredData}
+        refreshing={refreshing}
+        header={
+          <View>
+            <Input
+              className="mb-4"
+              placeholder="Search..."
+              value={query}
+              onChangeText={setQuery}
+              clearButtonMode="while-editing"
+            />
+            <View className="flex-row justify-between items-center">
+              {[ALL_CATEGORY_ITEM, ...categories].map((item) =>
+                renderCategory(item)
+              )}
+            </View>
           </View>
-        </View>
-      }
-      noData={{
-        icon: <Feather name="shopping-bag" size={80} />,
-        text: "No Products Found",
-      }}
-      renderItem={({ item }) => renderCategoryGroup(item)}
-      onRefresh={getData}
-    />
+        }
+        noData={{
+          icon: <Feather name="shopping-bag" size={80} />,
+          text: "No Products Found",
+        }}
+        renderItem={({ item }) => renderCategoryGroup(item)}
+        onRefresh={getData}
+      />
+    </CustomLoadingContainer>
   );
 };
 
