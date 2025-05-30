@@ -1,4 +1,4 @@
-export interface IUser {
+export interface IUserModel {
   documentId: string;
   blocked: boolean;
   confirmed: boolean;
