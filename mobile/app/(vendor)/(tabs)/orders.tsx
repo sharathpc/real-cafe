@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { DateTime } from "luxon";
+import { Separator } from "@rn-primitives/select";
 
 import { CustomHeaderFlatList } from "@/components/app/CustomHeaderFlatList";
 import { getAllOrders } from "@/services/Vendor";
 import { useAuthStore } from "@/store/authStore";
 import { IVendorOrder } from "@/models";
 import { UserAvatar } from "@/components/app/UserAvatar";
-import { Separator } from "@rn-primitives/select";
 import {
   CustomDateFilter,
   DATE_FILTERS,

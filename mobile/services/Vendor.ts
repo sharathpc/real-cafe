@@ -9,6 +9,56 @@ import {
 } from "@/models";
 import { axiosInstance } from "./Interceptors";
 
+const getDashboardRawData = (
+  vendorId: string,
+  startDate: string,
+  endDate: string
+): Promise<{
+  data: IVendorOrder[];
+  meta: IMeta;
+}> => {
+  return axiosInstance(`/api/orders`, {
+    params: {
+      fields: ["order_status"],
+      populate: {
+        items: {
+          fields: ["quantity"],
+          populate: {
+            product: {
+              fields: ["name", "price"],
+              populate: {
+                image: {
+                  fields: ["name", "url"],
+                },
+              },
+            },
+          },
+          filters: {
+            product: {
+              vendor: {
+                documentId: vendorId,
+              },
+            },
+          },
+        },
+      },
+      filters: {
+        createdAt: {
+          $gte: startDate,
+          $lt: endDate,
+        },
+        items: {
+          product: {
+            vendor: {
+              documentId: vendorId,
+            },
+          },
+        },
+      },
+    },
+  }).then((response) => response.data);
+};
+
 const getAllOrders = (
   vendorId: string,
   startDate: string,
@@ -30,9 +80,6 @@ const getAllOrders = (
               populate: {
                 image: {
                   fields: ["name", "url"],
-                },
-                vendor: {
-                  fields: ["username"],
                 },
               },
             },
@@ -165,6 +212,7 @@ const updateVendorDetails = (
 };
 
 export {
+  getDashboardRawData,
   getAllOrders,
   getAllCategoriesWithProducts,
   getProductDetails,
