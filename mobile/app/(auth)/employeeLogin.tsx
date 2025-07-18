@@ -1,26 +1,27 @@
-import { useEffect, useState } from "react";
-import { router } from "expo-router";
-import { View } from "react-native";
-import * as WebBrowser from "expo-web-browser";
-import * as Linking from "expo-linking";
-import { Image } from "expo-image";
-import { Button } from "@/components/ui/button";
-import { Text } from "@/components/ui/text";
+import { useEffect, useState } from 'react';
 
-import { STRAPI_URL } from "@/constants/Variables";
-import { getStrapiToken } from "@/services/Authentication";
-import { useAuthStore } from "@/store/authStore";
-import { ThemedView } from "@/components/ThemedView";
-import { ThemedText } from "@/components/ThemedText";
-import { ProductImagesGrid } from "@/components/app/ProductImagesGrid";
-import { RealpageLogo } from "@/utils";
+import { Image } from 'expo-image';
+import * as Linking from 'expo-linking';
+import { router } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
+import { View } from 'react-native';
+
+import { ProductImagesGrid } from '@/components/app/ProductImagesGrid';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { Button } from '@/components/ui/button';
+import { Text } from '@/components/ui/text';
+import { STRAPI_URL } from '@/constants/Variables';
+import { getStrapiToken } from '@/services/Authentication';
+import { useAuthStore } from '@/store/authStore';
+import { RealpageLogo } from '@/utils';
 
 const EmployeeLogin = () => {
   const { token, setAuthInfo } = useAuthStore();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleAuth = async () => {
-    const callbackUrl = Linking.createURL("employeeLogin");
+    const callbackUrl = Linking.createURL('employeeLogin');
 
     try {
       const unifedInfo = await WebBrowser.openAuthSessionAsync(
@@ -28,7 +29,7 @@ const EmployeeLogin = () => {
         callbackUrl
       );
 
-      if (unifedInfo.type === "success") {
+      if (unifedInfo.type === 'success') {
         const parsedUrl = new URL(unifedInfo.url);
         getStrapiToken(parsedUrl.search)
           .then((data) => {
@@ -43,7 +44,7 @@ const EmployeeLogin = () => {
 
   useEffect(() => {
     if (token) {
-      router.replace("/");
+      router.replace('/');
     }
   }, [token]);
 
@@ -60,7 +61,7 @@ const EmployeeLogin = () => {
           </ThemedText>
           <View>
             <Button
-              className="flex-0 flex-row justify-center items-center rounded-3xl"
+              className="flex-0 flex-row items-center justify-center rounded-3xl"
               disabled={loading}
               onPress={() => handleAuth()}
             >
@@ -76,12 +77,12 @@ const EmployeeLogin = () => {
               <Text>Unified Login</Text>
             </Button>
           </View>
-          <View className="flex-0 flex-row justify-center items-center">
+          <View className="flex-0 flex-row items-center justify-center">
             <Text className="text-center">Are you a vendor?</Text>
             <Button
-              size={"link"}
-              variant={"link"}
-              onPress={() => router.push("/(auth)/vendorLogin")}
+              size={'link'}
+              variant={'link'}
+              onPress={() => router.push('/(auth)/vendorLogin')}
             >
               <Text className="font-semibold">Vendor Login</Text>
             </Button>
