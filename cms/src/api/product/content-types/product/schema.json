@@ -4,7 +4,8 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "product"
+    "displayName": "Product",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -23,18 +24,27 @@
       "min": 0
     },
     "image": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": ["images"]
     },
     "category": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::category.category",
-      "inversedBy": "products"
+      "inversedBy": "products",
+      "required": true
+    },
+    "vendor": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user",
+      "required": true
+    },
+    "available": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

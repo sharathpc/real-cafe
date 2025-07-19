@@ -1,15 +1,14 @@
 export default ({ env }) => ({
   upload: {
     config: {
-      provider: "cloudinary",
+      provider: "strapi-provider-upload-imagekit",
       providerOptions: {
-        cloud_name: env("CLOUDINARY_NAME"),
-        api_key: env("CLOUDINARY_KEY"),
-        api_secret: env("CLOUDINARY_SECRET"),
-      },
-      actionOptions: {
-        upload: {},
-        delete: {},
+        publicKey: env("IMAGEKIT_PUBLIC_KEY"),
+        privateKey: env("IMAGEKIT_PRIVATE_KEY"),
+        urlEndpoint: env("IMAGEKIT_URL_ENDPOINT"),
+        params: {
+          folder: env("IMAGEKIT_FOLDER"),
+        },
       },
     },
   },

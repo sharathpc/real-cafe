@@ -1,0 +1,60 @@
+diff --git a/node_modules/@strapi/plugin-users-permissions/dist/server/config.js b/node_modules/@strapi/plugin-users-permissions/dist/server/config.js
+index 121eb57..425657e 100644
+--- a/node_modules/@strapi/plugin-users-permissions/dist/server/config.js
++++ b/node_modules/@strapi/plugin-users-permissions/dist/server/config.js
+@@ -34,13 +34,13 @@ function requireConfig() {
+                             throw new Error('The callback is not a valid URL');
+                         }
+                         // Make sure the different origin matches
+-                        if (uCallback.origin !== uProviderCallback.origin) {
++                        /* if (uCallback.origin !== uProviderCallback.origin) {
+                             throw new Error(`Forbidden callback provided: origins don't match. Please verify your config.`);
+-                        }
++                        } */
+                         // Make sure the different pathname matches
+-                        if (uCallback.pathname !== uProviderCallback.pathname) {
++                        /* if (uCallback.pathname !== uProviderCallback.pathname) {
+                             throw new Error(`Forbidden callback provided: pathname don't match. Please verify your config.`);
+-                        }
++                        } */
+                     // NOTE: We're not checking the search parameters on purpose to allow passing different states
+                     }
+                 }
+diff --git a/node_modules/@strapi/plugin-users-permissions/dist/server/services/providers-registry.js b/node_modules/@strapi/plugin-users-permissions/dist/server/services/providers-registry.js
+index 9063695..33d2c04 100644
+--- a/node_modules/@strapi/plugin-users-permissions/dist/server/services/providers-registry.js
++++ b/node_modules/@strapi/plugin-users-permissions/dist/server/services/providers-registry.js
+@@ -509,7 +509,32 @@ function requireProvidersRegistry() {
+                         };
+                     });
+                 }
+-            }
++            },
++            unified: {
++                enabled: false,
++                icon: '',
++                grantConfig: {
++                    key: '',
++                    secret: '',
++                    callback: `${baseURL}/unified/callback`,
++                    scope: [
++                        'openid'
++                    ],
++                },
++                async authCallback({ accessToken }) {
++                    const unified = purest({ 
++                        provider: 'unified' 
++                    });
++                    return unified.get('userinfo').auth(accessToken).request().then(({ body }) => {
++                        return {
++                            username: body.loginName,
++                            email: body.loginName,
++                            firstname: body.firstName,
++                            lastname: body.lastName,
++                        };
++                    });
++                },
++            },
+         });
+     providersRegistry = ()=>{
+         const purest = require$$4;

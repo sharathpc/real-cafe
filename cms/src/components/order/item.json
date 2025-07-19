@@ -2,20 +2,28 @@
   "collectionName": "components_order_items",
   "info": {
     "displayName": "Item",
-    "icon": "file"
+    "icon": "file",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "product": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::product.product"
+      "target": "api::product.product",
+      "required": true
     },
     "quantity": {
       "type": "integer",
       "required": true,
       "default": 1,
       "min": 1
+    },
+    "price": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "min": 0
     }
   }
 }

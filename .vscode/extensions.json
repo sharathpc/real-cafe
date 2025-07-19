@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "zhuangtongfa.material-theme",
+    "formulahendry.auto-rename-tag",
+    "ms-vscode-remote.remote-containers",
+    "mikestead.dotenv",
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint",
+    "xabikos.javascriptsnippets",
+    "ms-vsliveshare.vsliveshare",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "vscode-icons-team.vscode-icons"
+  ]
+}

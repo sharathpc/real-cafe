@@ -11,18 +11,20 @@
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "copytypes": "node copyTypes.js",
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@strapi/plugin-graphql": "^5.12.6",
-    "@strapi/plugin-users-permissions": "5.12.6",
-    "@strapi/provider-upload-cloudinary": "^5.12.6",
-    "@strapi/strapi": "5.12.6",
-    "better-sqlite3": "11.3.0",
+    "@strapi/plugin-graphql": "^5.13.0",
+    "@strapi/plugin-users-permissions": "5.13.0",
+    "@strapi/strapi": "5.13.0",
     "patch-package": "^8.0.0",
+    "pg": "^8.16.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
+    "strapi-plugin-required-relation-field": "^0.3.0",
+    "strapi-provider-upload-imagekit": "^5.11.10",
     "styled-components": "^6.0.0"
   },
   "devDependencies": {
