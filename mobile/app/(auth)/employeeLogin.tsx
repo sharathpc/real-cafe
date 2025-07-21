@@ -14,7 +14,6 @@ import { Text } from '@/components/ui/text';
 import { STRAPI_URL } from '@/constants/Variables';
 import { getStrapiToken } from '@/services/Authentication';
 import { useAuthStore } from '@/store/authStore';
-import { RealpageLogo } from '@/utils';
 
 const EmployeeLogin = () => {
   const { token, setAuthInfo } = useAuthStore();
@@ -57,7 +56,7 @@ const EmployeeLogin = () => {
             Your Food Destination for Everyting
           </ThemedText>
           <ThemedText className="text-center" type="defaultSemiBold">
-            Log in with Unified and start odering
+            Log in with Employee OAuth and start odering
           </ThemedText>
           <View>
             <Button
@@ -65,16 +64,7 @@ const EmployeeLogin = () => {
               disabled={loading}
               onPress={() => handleAuth()}
             >
-              <Image
-                source={RealpageLogo}
-                style={{
-                  width: 18,
-                  height: 18,
-                  marginRight: 10,
-                  borderRadius: 999,
-                }}
-              />
-              <Text>Unified Login</Text>
+              <Text>Employee Login</Text>
             </Button>
           </View>
           <View className="flex-0 flex-row items-center justify-center">

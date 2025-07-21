@@ -1,70 +1,69 @@
-export const RealpageLogo = require("../assets/login/realpage-logo.png");
-export const VendorImage = require("../assets/login/vendor-image.png");
+export const VendorImage = require('../assets/login/vendor-image.png');
 export const ImagesDataList = [
   [
     {
-      id: "1",
-      source: require("../assets/products/p1.png"),
+      id: '1',
+      source: require('../assets/products/p1.png'),
     },
     {
-      id: "2",
-      source: require("../assets/products/p2.png"),
+      id: '2',
+      source: require('../assets/products/p2.png'),
     },
     {
-      id: "3",
-      source: require("../assets/products/p3.png"),
+      id: '3',
+      source: require('../assets/products/p3.png'),
     },
     {
-      id: "0",
+      id: '0',
       source: null,
     },
   ],
   [
     {
-      id: "0",
+      id: '0',
       source: null,
     },
     {
-      id: "4",
-      source: require("../assets/products/p4.png"),
+      id: '4',
+      source: require('../assets/products/p4.png'),
     },
     {
-      id: "5",
-      source: require("../assets/products/p5.png"),
+      id: '5',
+      source: require('../assets/products/p5.png'),
     },
     {
-      id: "6",
-      source: require("../assets/products/p6.png"),
+      id: '6',
+      source: require('../assets/products/p6.png'),
     },
   ],
   [
     {
-      id: "7",
-      source: require("../assets/products/p7.png"),
+      id: '7',
+      source: require('../assets/products/p7.png'),
     },
     {
-      id: "8",
-      source: require("../assets/products/p8.png"),
+      id: '8',
+      source: require('../assets/products/p8.png'),
     },
     {
-      id: "9",
-      source: require("../assets/products/p9.png"),
+      id: '9',
+      source: require('../assets/products/p9.png'),
     },
     {
-      id: "0",
+      id: '0',
       source: null,
     },
   ],
 ];
 
 export const lightColors = [
-  "rgba(255,255,255,1)",
-  "rgba(255,255,255,0.9)",
-  "rgba(255,255,255,0.7)",
-  "rgba(255,255,255,0.6)",
-  "rgba(255,255,255,0.5)",
-  "rgba(255,255,255,0.4)",
-  "rgba(255,255,255,0.003)",
+  'rgba(255,255,255,1)',
+  'rgba(255,255,255,0.9)',
+  'rgba(255,255,255,0.7)',
+  'rgba(255,255,255,0.6)',
+  'rgba(255,255,255,0.5)',
+  'rgba(255,255,255,0.4)',
+  'rgba(255,255,255,0.003)',
 ];
 
 // export const adData = [
@@ -204,27 +203,27 @@ export const lightColors = [
 // ]
 
 export const wavyData =
-  "M 0 2000 0 500 Q 62.5 280 125 500 t 125 0 125 0 125 0 125 0 125 0 125 0 125 0 125 0 125 0 125 0   125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0 v1000 z";
+  'M 0 2000 0 500 Q 62.5 280 125 500 t 125 0 125 0 125 0 125 0 125 0 125 0 125 0 125 0 125 0 125 0   125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0  125 0 125 0 125 0 v1000 z';
 
 export const orders = [
   {
-    orderId: "ORDER21312",
+    orderId: 'ORDER21312',
     items: [
-      { id: "a", item: { name: "Milk" }, count: 2 },
-      { id: "b", item: { name: "Tea" }, count: 1 },
+      { id: 'a', item: { name: 'Milk' }, count: 2 },
+      { id: 'b', item: { name: 'Tea' }, count: 1 },
     ],
     totalPrice: 25.0,
-    createdAt: "2024-08-10T10:00:00Z",
-    status: "delivered",
+    createdAt: '2024-08-10T10:00:00Z',
+    status: 'delivered',
   },
   {
-    orderId: "ORDER21212",
+    orderId: 'ORDER21212',
     items: [
-      { id: "c", item: "Burger", count: 1 },
-      { id: "d", item: "Fries", count: 3 },
+      { id: 'c', item: 'Burger', count: 1 },
+      { id: 'd', item: 'Fries', count: 3 },
     ],
     totalPrice: 15.0,
-    createdAt: "2024-08-11T11:30:00Z",
-    status: "available",
+    createdAt: '2024-08-11T11:30:00Z',
+    status: 'available',
   },
 ];
